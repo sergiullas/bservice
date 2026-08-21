@@ -2,8 +2,8 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Sidebar } from './components/Sidebar';
-import { ServiceOfferingsPage } from './components/ServiceOfferingsPage';
+import { Sidebar } from './Sidebar';
+import { ServiceLogFeature } from '../app/ServiceLogFeature';
 
 const theme = createTheme({
   typography: {
@@ -11,7 +11,11 @@ const theme = createTheme({
   },
 });
 
-export default function App() {
+/**
+ * Standalone stakeholder-demo host. Owns the theme, full-viewport shell, and
+ * Sidebar — none of which the host-neutral ServiceLogFeature knows about.
+ */
+export default function StandaloneApp() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -27,7 +31,7 @@ export default function App() {
         style={{ overflow: 'auto', padding: 32 }}
       >
         <Box style={{ maxWidth: 1400, margin: '0 auto' }}>
-          <ServiceOfferingsPage />
+          <ServiceLogFeature />
         </Box>
       </Box>
     </Box>
