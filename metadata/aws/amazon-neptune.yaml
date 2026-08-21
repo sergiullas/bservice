@@ -1,0 +1,37 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-neptune
+  title: Amazon Neptune
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Database
+    serviceDescription: Amazon Neptune is a service that includes a graph database engine, graph analytics database engine, graph machine learning (ML), and visualization tools, which can be used individually or together. The Neptune service makes it easy to work with graph data on AWS.
+    serviceExternalDoc: https://docs.aws.amazon.com/neptune/
+    serviceInternalDoc: ./platforms/development/amazon/neptunedb
+    provisioningModel: Tier 3
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Restricted
+    trmRestrictionOwner: CIM Data Platform
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-neptune
+    fundingApproach: Funding recouped
+    approvalWorkflow: Architecture Review
+    provisioningSLA: 10 business days
+    serviceUseCases:
+      - Graph relationship analysis
+      - Fraud detection graphs
+      - Knowledge graph applications
+    serviceOnboardingRequirements:
+      - cost_center
+      - project
+      - environment
+      - Quantity
+      - Multi-AZ
+      - Instance Type/Instance Class
+      - Storage

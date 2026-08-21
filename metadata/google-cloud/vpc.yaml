@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: vpc
+  title: Virtual Private Cloud
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: Google Cloud
+    serviceCategory: Networking
+    serviceDescription: Provision isolated, software-defined networking for cloud workloads across Google's global infrastructure.
+    serviceExternalDoc: https://cloud.google.com/docs
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 2
+    cloudAto:
+      - MAGE
+    serviceOwner: Carol Danvers
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#gcp-vpc
+    fundingApproach: ECSD pay
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 2 business days
+    serviceUseCases:
+      - Global network topology
+      - VPN and interconnect
+      - Shared VPC for multi-project
+      - Firewall policy enforcement

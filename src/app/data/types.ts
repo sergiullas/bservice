@@ -21,10 +21,10 @@ export type ApprovalWorkflow =
   | "Multi-Level Approval";
 
 /**
- * ServiceLog prototype model. Fields sourced from the implementation team's
- * metadata (see data/sourceCatalog.ts + data/normalize.ts) are mapped in via
- * buildAwsServices(); everything else is explicit prototype enrichment
- * (data/awsEnrichment.ts for AWS records, inline for legacy records).
+ * Stable ServiceLog UI contract (STORY 2.2 PO decision #5). Populated by
+ * normalizing CSP-owned YAML metadata (see metadata/ + src/metadata/) --
+ * this interface, not the YAML shape, is what ServiceOfferingsPage,
+ * FilterBar, ServiceCard, and ServiceDetailDrawer are written against.
  */
 export interface Service {
   id: string;

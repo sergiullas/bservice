@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: gcp-iam
+  title: Google Cloud IAM
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: Google Cloud
+    serviceCategory: Security
+    serviceDescription: Unified identity and access management for controlling who can do what on which Google Cloud resource.
+    serviceExternalDoc: https://cloud.google.com/docs
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 1
+    cloudAto:
+      - MAGE
+    serviceOwner: Carol Danvers
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#gcp-iam
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Resource-level access control
+      - Service account management
+      - Org policy enforcement
+      - Workload Identity Federation

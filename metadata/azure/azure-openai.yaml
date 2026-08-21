@@ -1,0 +1,30 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: azure-openai
+  title: Azure OpenAI Service
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: Azure
+    serviceCategory: AI & Machine Learning
+    serviceDescription: Access OpenAI's powerful models including GPT-4 and DALL-E through Azure's enterprise infrastructure.
+    serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 4
+    cloudAto:
+      - CMAA
+    serviceOwner: Wanda Maximoff
+    serviceLimitations: US regions only; not approved for customer-facing PII.
+    fedRampStatus: FedRAMP In Process
+    trmStatus: Prohibited
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-openai
+    fundingApproach: Funding recouped
+    approvalWorkflow: Multi-Level Approval
+    provisioningSLA: 10 business days
+    serviceUseCases:
+      - Natural language processing
+      - Code completion and review
+      - Semantic search
+      - Document classification

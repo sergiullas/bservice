@@ -1,0 +1,30 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: aws-kms
+  title: AWS KMS
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Secret Management
+    serviceDescription: AWS KMS keys and functionality are used by other AWS services and is not a service that would need to be explicitly requested. It is an encryption and key management service scaled for cloud. The AWS KMS keys are protected by FIPS 140-3 Security Level 3 validated hardware security modules (HSM).
+    serviceExternalDoc: https://aws.amazon.com/kms/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    serviceLimitations: HSM key type requires security board approval.
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-kms
+    fundingApproach: ECSD pay
+    approvalWorkflow: Security Review
+    provisioningSLA: 5 business days
+    serviceUseCases:
+      - Data-at-rest encryption
+      - S3 server-side encryption
+      - EBS volume encryption
+      - Application-level key management

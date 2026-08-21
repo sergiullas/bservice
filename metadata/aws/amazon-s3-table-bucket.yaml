@@ -1,0 +1,36 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-s3-table-bucket
+  title: Amazon S3 Table Bucket
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Storage
+    serviceDescription: Table buckets are an Amazon S3 bucket type that can be used to create and store tables as S3 resources. They are used to store tabular data and metadata as objects for use in analytics workloads.
+    serviceExternalDoc: https://aws.amazon.com/s3/
+    serviceInternalDoc: https://gitlab-pages.cbp.dhs.gov/cloud/documentation/cim-7266/platforms/development/amazon/s3.html
+    provisioningModel: Tier 2
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Ready
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-s3-table-bucket
+    fundingApproach: Funding recouped
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 5 business days
+    serviceUseCases:
+      - Tabular analytics data storage
+      - Apache Iceberg table management
+      - Structured data lake workloads
+    serviceOnboardingRequirements:
+      - cost-center
+      - project
+      - environment
+      - quantity
+      - bucket-name
+      - actions (GetObject, PutObject, DeleteObject)
+      - bucket-type (table)

@@ -1,0 +1,28 @@
+# Valid fixture: a Restricted service correctly carrying trmRestrictionOwner.
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: fixture-restricted-service
+  title: Fixture Restricted Service
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: AI & Machine Learning
+    serviceDescription: A fixture service used only by the metadata validation test suite.
+    serviceExternalDoc: https://docs.aws.amazon.com/fixture/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/fixture/
+    provisioningModel: Tier 3
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Ready
+    trmStatus: Restricted
+    trmRestrictionOwner: CIM AI Platform Team
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#fixture-restricted-service
+    fundingApproach: Funding recouped
+    approvalWorkflow: Multi-Level Approval
+    provisioningSLA: 10 business days
+    serviceUseCases:
+      - Fixture validation

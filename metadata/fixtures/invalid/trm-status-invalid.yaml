@@ -1,0 +1,28 @@
+# Invalid: trmStatus is not one of the four controlled values. Must fail
+# validation, never be silently treated as a fifth status or coerced.
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: fixture-invalid-trm-status
+  title: Fixture Invalid TRM Status
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Compute
+    serviceDescription: Fixture for validation testing.
+    serviceExternalDoc: https://docs.aws.amazon.com/fixture/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/fixture/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Dangerous
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#fixture
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Fixture validation

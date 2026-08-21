@@ -1,0 +1,28 @@
+# Valid fixture used by src/metadata/__tests__ to prove a conforming
+# document passes validation. Not part of the live catalog.
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: fixture-permitted-service
+  title: Fixture Permitted Service
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Compute
+    serviceDescription: A fixture service used only by the metadata validation test suite.
+    serviceExternalDoc: https://docs.aws.amazon.com/fixture/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/fixture/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#fixture-permitted-service
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Fixture validation

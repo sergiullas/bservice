@@ -1,0 +1,23 @@
+# Invalid: several required ServiceLog profile fields are missing
+# (serviceOwner, provisioningSLA, serviceUseCases, trmLink).
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: fixture-missing-required-fields
+  title: Fixture Missing Required Fields
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Compute
+    serviceDescription: Fixture for validation testing.
+    serviceExternalDoc: https://docs.aws.amazon.com/fixture/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/fixture/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved

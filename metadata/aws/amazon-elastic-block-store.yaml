@@ -1,0 +1,28 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-elastic-block-store
+  title: Amazon Elastic Block Store
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Storage
+    serviceDescription: Amazon Elastic Block Store (EBS) provides raw, block-level storage volumes for use with Amazon EC2 instances. It functions like a virtual hard drive, enabling you to install operating systems, run databases, or store persistent files that remain intact even when an EC2 instance is stopped or restarted.
+    serviceExternalDoc: https://aws.amazon.com/ebs/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-elastic-block-store
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Persistent EC2 instance storage
+      - Database volume storage
+      - Snapshot-based disaster recovery

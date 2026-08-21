@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: pg
+  title: Managed PostgreSQL (Azure)
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: Azure
+    serviceCategory: Database
+    serviceDescription: Run a fully managed PostgreSQL database with built-in high availability and intelligent performance.
+    serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CMAA
+    serviceOwner: Wanda Maximoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#pg
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: 1 business day
+    serviceUseCases:
+      - Relational application backends
+      - Analytics and reporting
+      - Geospatial data workloads
+      - Multi-tenant SaaS databases

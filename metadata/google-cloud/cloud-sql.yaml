@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: cloud-sql
+  title: Cloud SQL
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: Google Cloud
+    serviceCategory: Database
+    serviceDescription: Fully managed relational database service for MySQL, PostgreSQL, and SQL Server on Google Cloud.
+    serviceExternalDoc: https://cloud.google.com/docs
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 1
+    cloudAto:
+      - MAGE
+    serviceOwner: Carol Danvers
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#cloud-sql
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: 1 business day
+    serviceUseCases:
+      - Web application databases
+      - ERP and CRM backends
+      - Analytics data stores
+      - Migration targets from on-prem

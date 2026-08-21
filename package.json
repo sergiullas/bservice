@@ -6,11 +6,15 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "test": "vitest run"
+    "test": "vitest run",
+    "validate:metadata": "tsx scripts/validate-metadata.ts"
   },
   "dependencies": {
     "@material-ui/core": "4.12.4",
     "@material-ui/icons": "4.11.3",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "js-yaml": "^5.3.0",
     "lucide-react": "0.487.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -20,9 +24,11 @@
     "@tailwindcss/vite": "4.1.12",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/react": "^12.1.5",
+    "@types/js-yaml": "^4.0.9",
     "@vitejs/plugin-react": "4.7.0",
     "jsdom": "^25.0.1",
     "tailwindcss": "4.1.12",
+    "tsx": "^4.23.12",
     "vite": "6.3.5",
     "vitest": "^3.2.7"
   }

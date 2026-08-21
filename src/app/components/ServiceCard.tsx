@@ -1,5 +1,5 @@
 import React from 'react';
-import { Service, TrmStatus } from '../data/services';
+import { Service, TrmStatus } from '../data/types';
 import { AwsLogo, AzureLogo, GoogleCloudLogo } from './ProviderLogo';
 
 const PROVIDER_BG: Record<string, string> = { AWS: '#FFF3E0', Azure: '#E8F4FD', 'Google Cloud': '#F1F8E9' };

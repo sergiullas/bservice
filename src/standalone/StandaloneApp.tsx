@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Sidebar } from './Sidebar';
 import { ServiceLogFeature } from '../app/ServiceLogFeature';
+import { loadStandaloneCatalog } from './data/yamlCatalogAdapter';
 
 const theme = createTheme({
   typography: {
@@ -16,6 +17,7 @@ const theme = createTheme({
  * Sidebar — none of which the host-neutral ServiceLogFeature knows about.
  */
 export default function StandaloneApp() {
+  const services = loadStandaloneCatalog();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -31,7 +33,7 @@ export default function StandaloneApp() {
         style={{ overflow: 'auto', padding: 32 }}
       >
         <Box style={{ maxWidth: 1400, margin: '0 auto' }}>
-          <ServiceLogFeature />
+          <ServiceLogFeature services={services} />
         </Box>
       </Box>
     </Box>

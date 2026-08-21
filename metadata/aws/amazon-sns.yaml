@@ -1,0 +1,39 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-sns
+  title: Amazon SNS
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Messaging
+    serviceDescription: Amazon SNS is a fully managed, reliable pub/sub messaging service that enables asynchronous communication between microservices or other distributed system components. It allows publishers to send messages to many subscribers including Lambda and SQS using one or more topics. While SQS offers persistence and a pull-based model, where a consumer polls a queue to process single messages, SNS offers a push-based fire and forget model, where multiple consumers subscribe to a topic and each process their own copy of a message.
+    serviceExternalDoc: https://aws.amazon.com/sns/
+    serviceInternalDoc: https://gitlab-pages.cbp.dhs.gov/cloud/documentation/cim-7266/platforms/development/amazon/sns.html
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-sns
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Pub/sub fan-out messaging
+      - Fault-tolerant event notification
+      - Lambda and SQS event triggers
+    serviceOnboardingRequirements:
+      - cost_center
+      - project
+      - environment
+      - Topic Names
+      - Need FIFO (First-In-First-Out) Topic
+      - Need Disable Content-Based Deduplication
+      - How many SNS Publishers (Optional)
+      - How many SNS Subscribers (Optional)
+      - How many Lambda Publishers (Optional)
+      - How many Lambda Subscribers (Optional)

@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: azure-keyvault
+  title: Azure Key Vault
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: Azure
+    serviceCategory: Security
+    serviceDescription: Safeguard cryptographic keys, secrets, and certificates used by cloud applications and services.
+    serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CMAA
+    serviceOwner: Wanda Maximoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-keyvault
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Certificate lifecycle management
+      - Encryption key storage
+      - Connection string secrets
+      - Managed HSM for high-assurance keys

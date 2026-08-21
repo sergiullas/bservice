@@ -1,0 +1,28 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-aurora-serverless
+  title: Amazon Aurora Serverless
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Database
+    serviceDescription: Amazon Aurora Serverless is an on demand, autoscaling configuration for Amazon Aurora, a relational database service compatible with MySQL and PostgreSQL. It automatically adjusts database capacity based on workload requirements, eliminating the need for manual provisioning and management of database servers.
+    serviceExternalDoc: https://aws.amazon.com/rds/aurora/serverless/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/platforms/development/amazon/rds.html#aurora-serverless
+    provisioningModel: Tier 2
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-aurora-serverless
+    fundingApproach: Funding recouped
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 3 business days
+    serviceUseCases:
+      - Variable and intermittent workload databases
+      - Dev and test database capacity
+      - Auto-scaling relational workloads

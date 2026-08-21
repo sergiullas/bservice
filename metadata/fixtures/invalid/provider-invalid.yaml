@@ -1,0 +1,28 @@
+# Invalid: cloudProvider is not one of AWS/Azure/Google Cloud. Adding a new
+# CSP must be an intentional schema change, not a silently accepted typo.
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: fixture-invalid-provider
+  title: Fixture Invalid Provider
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: Oracle Cloud
+    serviceCategory: Compute
+    serviceDescription: Fixture for validation testing.
+    serviceExternalDoc: https://docs.oracle.com/fixture/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/fixture/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#fixture
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Fixture validation

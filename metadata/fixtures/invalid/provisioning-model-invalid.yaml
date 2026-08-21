@@ -1,0 +1,27 @@
+# Invalid: provisioningModel is not one of Tier 1-4.
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: fixture-invalid-provisioning-model
+  title: Fixture Invalid Provisioning Model
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Compute
+    serviceDescription: Fixture for validation testing.
+    serviceExternalDoc: https://docs.aws.amazon.com/fixture/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/fixture/
+    provisioningModel: Tier 5
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#fixture
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Fixture validation

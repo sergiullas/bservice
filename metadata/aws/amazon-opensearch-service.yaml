@@ -1,0 +1,44 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-opensearch-service
+  title: Amazon OpenSearch Service
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Monitoring & Management
+    serviceDescription: Amazon OpenSearch Service makes it easy for you to perform interactive log analytics, real-time application monitoring, website search, and more. OpenSearch is an open source, distributed search and analytics suite derived from Elasticsearch. Amazon OpenSearch Service offers the latest versions of OpenSearch, support for 19 versions of Elasticsearch (1.5 to 7.10 versions), and visualization capabilities powered by OpenSearch Dashboards and Kibana (1.5 to 7.10 versions).
+    serviceExternalDoc: https://aws.amazon.com/opensearch-service/
+    serviceInternalDoc: ./platforms/development/amazon/opensearch
+    provisioningModel: Tier 2
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-opensearch-service
+    fundingApproach: Funding recouped
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 5 business days
+    serviceUseCases:
+      - Interactive log analytics
+      - Full-text search for applications
+      - Real-time application monitoring dashboards
+    serviceOnboardingRequirements:
+      - cost_center
+      - project
+      - environment
+      - quantity
+      - domain-name
+      - multi-az (If so, 2AZs?)
+      - es-version
+      - data-node-instance-type
+      - number-of-data-node-instances
+      - dedicated-to-master-instances
+      - master-instance-type
+      - storage
+      - encryption
+      - snapshot
+      - Will this be an internal only accessible domain (i.e. No access over the internet)?

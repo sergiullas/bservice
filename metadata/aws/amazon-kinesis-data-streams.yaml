@@ -1,0 +1,33 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-kinesis-data-streams
+  title: Amazon Kinesis Data Streams
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Messaging
+    serviceDescription: Amazon Kinesis Data Streams makes it easy to collect, process, and analyze real-time, streaming data to get timely insights and react quickly to new information. Amazon Kinesis offers key capabilities to cost-effectively process streaming data at any scale, along with the flexibility to choose the tools that best suit the requirements of an application. With Amazon Kinesis, one can ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications. Amazon Kinesis enables one to process and analyze data as it arrives and respond instantly instead of having to wait until all data is collected before the processing can begin.
+    serviceExternalDoc: https://docs.aws.amazon.com/streams/
+    serviceInternalDoc: ./platforms/development/amazon/kinesis
+    provisioningModel: Tier 2
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-kinesis-data-streams
+    fundingApproach: Funding recouped
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 3 business days
+    serviceUseCases:
+      - Real-time clickstream analytics
+      - IoT telemetry ingestion
+      - Streaming ETL pipelines
+    serviceOnboardingRequirements:
+      - cost_center
+      - project
+      - environment
+      - Quantity

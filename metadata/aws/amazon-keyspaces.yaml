@@ -1,0 +1,33 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-keyspaces
+  title: Amazon Keyspaces
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Database
+    serviceDescription: Amazon Keyspaces (for Apache Cassandra) is a scalable, highly available, and managed Apache Cassandra–compatible database service. With Amazon Keyspaces, you can run Cassandra workloads on AWS using the same Cassandra application code and developer tools that you use today. It is serverless and managed by AWS and does not require you to provision, patch, or manage servers, and does not require you to install, maintain, or operate software. The service can automatically scale tables up and down in response to application traffic. Data is encrypted by default and Amazon Keyspaces backs up table data continuously using point-in-time recovery. Keyspaces gives you the performance, elasticity, and enterprise features you need to operate business-critical Cassandra workloads at scale.
+    serviceExternalDoc: https://docs.aws.amazon.com/keyspaces/
+    serviceInternalDoc: ./platforms/development/amazon/keyspaces
+    provisioningModel: Tier 2
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-keyspaces
+    fundingApproach: ECSD pay
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 3 business days
+    serviceUseCases:
+      - Cassandra-compatible workload migration
+      - High-throughput wide-column data
+      - IoT and time-series data storage
+    serviceOnboardingRequirements:
+      - cost_center
+      - project
+      - environment
+      - Keyspace suffix (optional)

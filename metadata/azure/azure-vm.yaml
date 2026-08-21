@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: azure-vm
+  title: Azure Virtual Machines
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: Azure
+    serviceCategory: Compute
+    serviceDescription: On-demand scalable compute with the flexibility to choose OS, size, and configuration.
+    serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CMAA
+    serviceOwner: Wanda Maximoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-vm
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Lift-and-shift migrations
+      - Dev and test environments
+      - Legacy application hosting
+      - Windows workloads

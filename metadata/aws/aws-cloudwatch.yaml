@@ -1,0 +1,28 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: aws-cloudwatch
+  title: AWS CloudWatch
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Monitoring & Management
+    serviceDescription: Amazon CloudWatch is a monitoring and observability service for Amazon Web Services (AWS) resources and applications. It collects and tracks metrics, collects and stores log files, sets alarms, and automatically reacts to changes in your infrastructure to keep your systems running smoothly.
+    serviceExternalDoc: https://docs.aws.amazon.com/cloudwatch/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-cloudwatch
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Metrics and alarms for AWS resources
+      - Centralized log aggregation
+      - Automated remediation triggers

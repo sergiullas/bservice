@@ -1,0 +1,29 @@
+# Invalid: serviceCategory is a spelling variant of a real category
+# ("AI and Machine Learning" vs "AI & Machine Learning") rather than the
+# controlled value. Must fail rather than silently create a new category.
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: fixture-invalid-category
+  title: Fixture Invalid Category
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: AI and Machine Learning
+    serviceDescription: Fixture for validation testing.
+    serviceExternalDoc: https://docs.aws.amazon.com/fixture/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/fixture/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#fixture
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Fixture validation

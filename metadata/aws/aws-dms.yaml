@@ -1,0 +1,35 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: aws-dms
+  title: AWS DMS
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Migration & Transfer
+    serviceDescription: AWS DMS enables database migration to AWS quickly and securely. The source database remains fully operational during migration, minimizing downtime to applications that rely on the database. The AWS Database Migration Service can migrate data to and from most widely used commercial and open-source databases. The service supports homogenous migrations such as Oracle to Oracle, as well as heterogeneous migrations between different database platforms, such as Oracle to Amazon Aurora or Microsoft SQL Server to MySQL. One can stream data to Amazon Redshift, Amazon DynamoDB, and Amazon S3 from any of the supported sources, which are Amazon Aurora, PostgreSQL, MySQL, MariaDB, Oracle Database, SAP ASE, SQL Server, IBM DB2 LUW, and MongoDB, enabling consolidation and easy analysis of data in a petabyte-scale data warehouse. AWS Database Migration Service can also be used for continuous data replication with high availability.
+    serviceExternalDoc: https://docs.aws.amazon.com/dms/
+    serviceInternalDoc: ./platforms/development/amazon/dms
+    provisioningModel: Tier 2
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-dms
+    fundingApproach: Funding recouped
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 5 business days
+    serviceUseCases:
+      - Homogeneous and heterogeneous database migration
+      - Continuous data replication
+      - On-prem to cloud database cutover
+    serviceOnboardingRequirements:
+      - cost-center
+      - project
+      - environment
+      - Full-load OR Full-load plus on-going replication
+      - Source database connection parameters
+      - Target database connection parameters

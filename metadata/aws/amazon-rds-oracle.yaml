@@ -1,0 +1,40 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-rds-oracle
+  title: Amazon RDS Oracle
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Database
+    serviceDescription: RDS is a distributed relational database service by Amazon Web Services (AWS). It is a web service running "in the cloud" designed to simplify the setup, operation, and scaling of a relational database for use in applications. Complex administration processes like patching the database software, backing up databases and enabling point-in-time recovery are managed automatically. Scaling storage and compute resources can be performed by a single API call.
+    serviceExternalDoc: https://aws.amazon.com/rds/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/platforms/development/amazon/rds.html#oracle
+    provisioningModel: Tier 2
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-rds-oracle
+    fundingApproach: Funding recouped
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 3 business days
+    serviceUseCases:
+      - Oracle-dependent COTS applications
+      - Enterprise transactional systems
+      - Licensed database migrations
+    serviceOnboardingRequirements:
+      - cost_center
+      - project
+      - environment
+      - Quantity
+      - Engine (Oracle)
+      - Instance Type/Instance Class
+      - Multi-AZ
+      - Storage
+      - 'RDS Proxy needed (without native connection pooling capabilities): Yes/No'
+      - 'Target database endpoint: If yes'
+      - 'Serverless (Aurora PostgreSQL/MySQL only): Yes/No'

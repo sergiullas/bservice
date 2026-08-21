@@ -1,0 +1,28 @@
+# Invalid (paired with duplicate-id-a.yaml): both documents declare the
+# same metadata.name. Service IDs must be unique across the whole catalog.
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: fixture-duplicate-service
+  title: Fixture Duplicate Service B
+spec:
+  type: service-offering
+  lifecycle: production
+  profile:
+    cloudProvider: Azure
+    serviceCategory: Compute
+    serviceDescription: Fixture for validation testing (second copy).
+    serviceExternalDoc: https://learn.microsoft.com/fixture/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/fixture/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CMAA
+    serviceOwner: Wanda Maximoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#fixture-b
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Fixture validation
