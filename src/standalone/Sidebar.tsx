@@ -9,7 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import svgPaths from '../../imports/BrandOnePager/svg-i0ml0afi0n';
+import svgPaths from '../imports/BrandOnePager/svg-i0ml0afi0n';
 
 const EXPANDED_WIDTH = 220;
 const COLLAPSED_WIDTH = 56;

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "test": "vitest run"
   },
   "dependencies": {
     "@material-ui/core": "4.12.4",
@@ -17,8 +18,12 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.1.12",
+    "@testing-library/dom": "^9.3.4",
+    "@testing-library/react": "^12.1.5",
     "@vitejs/plugin-react": "4.7.0",
+    "jsdom": "^25.0.1",
     "tailwindcss": "4.1.12",
-    "vite": "6.3.5"
+    "vite": "6.3.5",
+    "vitest": "^3.2.7"
   }
 }
