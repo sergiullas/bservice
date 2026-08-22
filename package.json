@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "prebuild": "npm run validate:metadata",
     "build": "vite build",
     "dev": "vite",
     "test": "vitest run",

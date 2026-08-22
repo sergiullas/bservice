@@ -2,14 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://servicelog.internal/schema/service-metadata.schema.json",
   "title": "ServiceLog Service Metadata",
-  "description": "Canonical machine-readable contract for CSP-owned service metadata YAML documents. Each document describes exactly one cloud service offering, in a Backstage-compatible Resource envelope. The platform (ServiceLog) owns this schema and its controlled vocabularies; CSP teams own the values inside it for the services they maintain.",
+  "description": "Canonical machine-readable contract for CSP-owned service metadata YAML documents. Each document describes exactly one cloud service offering, in a Backstage-shaped Resource envelope prepared for future Backstage integration (STORY 2.3) -- these documents are NOT yet valid for direct Backstage Catalog ingestion, since real Backstage Resource entities require spec.owner and this schema intentionally leaves it optional/absent rather than inventing values. The platform (ServiceLog) owns this schema and its controlled vocabularies; CSP teams own the values inside it for the services they maintain.",
   "type": "object",
   "additionalProperties": false,
   "required": ["apiVersion", "kind", "metadata", "spec"],
   "properties": {
     "apiVersion": {
       "const": "backstage.io/v1alpha1",
-      "description": "Backstage-compatible envelope version. Fixed so documents remain ingestible by a future Backstage Catalog without a rewrite."
+      "description": "Backstage-shaped envelope version, chosen so these documents won't need a structural rewrite when Story 2.3 adds real Backstage Catalog ingestion. Not itself a claim that the document is valid for ingestion today -- see spec.owner."
     },
     "kind": {
       "const": "Resource",
@@ -49,7 +49,7 @@
         },
         "owner": {
           "type": "string",
-          "description": "Backstage Catalog ownership / group reference (e.g. group:default/example-team). This is Backstage entity ownership, NOT the ServiceLog-facing Service Owner -- it must never be normalized into Service.serviceOwner. Optional and intentionally omitted in prototype data where no real owning group is known; do not populate with an invented value.",
+          "description": "Backstage Catalog ownership / group reference (e.g. group:default/example-team). This is Backstage entity ownership, NOT the ServiceLog-facing Service Owner -- it must never be normalized into Service.serviceOwner. Optional and intentionally omitted in prototype data where no real owning group is known; do not populate with an invented value. Note: Backstage's own Resource entity model requires spec.owner for direct Catalog ingestion, so a document without it is Backstage-shaped but not yet a valid Catalog entity -- resolving the real owner is Story 2.3 scope.",
           "minLength": 1
         },
         "lifecycle": {

@@ -20,8 +20,13 @@ metadata/
 └── google-cloud/                       # one YAML document per Google Cloud service
 ```
 
-Each service is a single YAML file in a Backstage-compatible `Resource`
-envelope, e.g. `metadata/aws/amazon-bedrock.yaml`:
+Each service is a single YAML file in a Backstage-shaped `Resource`
+envelope -- prepared for Backstage integration in a future story, but **not**
+yet valid for direct ingestion by a real Backstage Catalog: Backstage's own
+Resource entity model requires `spec.owner`, and this schema intentionally
+leaves it optional/absent here rather than inventing a value. Resolving the
+real owner and doing actual Catalog integration is Story 2.3 scope. Example,
+`metadata/aws/amazon-bedrock.yaml`:
 
 ```yaml
 apiVersion: backstage.io/v1alpha1
