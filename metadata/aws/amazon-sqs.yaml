@@ -1,0 +1,48 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-sqs
+  title: Amazon SQS
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Messaging
+    serviceDescription: >-
+      Amazon SQS is a fully managed message queuing service that decouples and scales microservices,
+      distributed systems, and serverless applications. SQS eliminates the complexity and overhead
+      associated with managing and operating message-oriented middleware and empowers developers to
+      focus on differentiating work. Using SQS, one can send, store, and receive messages between
+      software components at any volume, without losing messages or requiring other services to be
+      available. SQS offers two types of message queues. Standard queues offer maximum throughput,
+      best-effort ordering, and at-least-once delivery. SQS FIFO queues are designed to guarantee
+      that messages are processed exactly once, in the exact order that they are sent.
+    serviceExternalDoc: https://docs.aws.amazon.com/sqs/
+    serviceInternalDoc: ./platforms/development/amazon/sqs
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-sqs
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Decoupled microservice messaging
+      - Work queue processing
+      - Dead-letter queue handling for failed messages
+    serviceOnboardingRequirements:
+      - cost-center
+      - project
+      - environment
+      - queue-name
+      - suffix (optional)
+      - queue-type (standard or fifo)
+      - fifo-content-based-deduplication (true or false, for fifo queues only)
+      - message-retention-period (e.g., 4 days)
+      - visibility-timeout (in seconds)
+      - receive-message-wait-time (in seconds)
+      - deadletter-queue
+      - dlq-maximum-receives (number of receives before moving to dlq)

@@ -1,0 +1,31 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: aws-cloudtrail
+  title: AWS CloudTrail
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Monitoring & Management
+    serviceDescription: >-
+      AWS CloudTrail is an AWS service that helps you enable operational and risk auditing,
+      governance, and compliance of your AWS account. Actions taken by a user, role, or an AWS
+      service are recorded as events in CloudTrail. Events include actions taken in the AWS
+      Management Console, AWS Command Line Interface, and AWS SDKs and APIs.
+    serviceExternalDoc: https://aws.amazon.com/cloudtrail/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-cloudtrail
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Account activity auditing
+      - Governance and compliance logging
+      - Security incident investigation

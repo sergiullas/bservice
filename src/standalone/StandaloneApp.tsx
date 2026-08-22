@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Sidebar } from './Sidebar';
 import { ServiceLogFeature } from '../app/ServiceLogFeature';
+import { services } from './data/yamlAdapter';
 
 const theme = createTheme({
   typography: {
@@ -31,7 +32,7 @@ export default function StandaloneApp() {
         style={{ overflow: 'auto', padding: 32 }}
       >
         <Box style={{ maxWidth: 1400, margin: '0 auto' }}>
-          <ServiceLogFeature />
+          <ServiceLogFeature services={services} />
         </Box>
       </Box>
     </Box>

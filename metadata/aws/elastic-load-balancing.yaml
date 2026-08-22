@@ -1,0 +1,48 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: elastic-load-balancing
+  title: Elastic Load Balancing
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Container Platform
+    serviceDescription: >-
+      Amazon ELB automatically distributes incoming application traffic across multiple targets,
+      such as EC2 instances. It monitors the health of registered targets and routes traffic only to
+      the healthy targets. ELB supports two types of load balancers, Application Load Balancers and
+      Classic Load Balancers.
+    serviceExternalDoc: https://docs.aws.amazon.com/elasticloadbalancing/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#elastic-load-balancing
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Application and network load balancing
+      - Blue-green and canary traffic shifting
+      - TLS termination for containerized services
+    serviceOnboardingRequirements:
+      - cost-center
+      - project
+      - environment
+      - quantity
+      - type (application or network)
+      - scheme (internal or internet-facing)
+      - subnets (a comma-separated list of subnet-ids)
+      - listener-ports (a comma-separated list, e.g., 80, 443)
+      - >-
+        Application Load Balancers (default-ssl-certificate-arn (if using https); security-groups (a
+        comma-separated list of security-group-ids); target-groups (list of all groups)
+        (for-each-target-group-provide (protocol (e.g., http); port (e.g., 8080); URL to re-route;
+        routing-rules (if using multiple target groups))))
+      - >-
+        Network Load Balancers (target-groups (list of all groups) (for-each-target-group-provide
+        (port (e.g., 8443))))

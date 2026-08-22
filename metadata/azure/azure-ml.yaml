@@ -1,0 +1,28 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: azure-ml
+  title: Azure Machine Learning
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: Azure
+    serviceCategory: AI & Machine Learning
+    serviceDescription: End-to-end platform for building, training, and deploying ML models with MLOps capabilities.
+    serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 2
+    cloudAto:
+      - CMAA
+    serviceOwner: Wanda Maximoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-ml
+    fundingApproach: ECSD pay
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 3 business days
+    serviceUseCases:
+      - Automated ML experiments
+      - Model registry and versioning
+      - Data labeling pipelines
+      - Responsible AI dashboards

@@ -1,0 +1,30 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: aks
+  title: Azure Kubernetes Service
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: Azure
+    serviceCategory: Compute
+    serviceDescription: Deploy and operate containerized workloads on a managed Kubernetes control plane.
+    serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 3
+    cloudAto:
+      - CMAA
+    serviceOwner: Wanda Maximoff
+    serviceLimitations: Max 10 node pools per cluster.
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Restricted
+    trmRestrictionOwner: CIM Compute Platform
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aks
+    fundingApproach: Funding recouped
+    approvalWorkflow: Architecture Review
+    provisioningSLA: 10 business days
+    serviceUseCases:
+      - Containerized microservices
+      - CI/CD pipeline hosting
+      - Stateful application deployment
+      - Multi-tenant workloads

@@ -1,0 +1,45 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-sagemaker
+  title: Amazon SageMaker
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: AI & Machine Learning
+    serviceDescription: >-
+      Amazon SageMaker provides data scientists and developers with a fully managed environment to
+      prepare, build, train, and deploy Machine Learning models with fully managed infrastructure,
+      tools, and workflows.
+    serviceExternalDoc: https://docs.aws.amazon.com/sagemaker/
+    serviceInternalDoc: ./platforms/development/amazon/sagemaker-notebook
+    provisioningModel: Tier 3
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    serviceLimitations: GPU instances require separate approval.
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Restricted
+    trmRestrictionOwner: CIM AI Platform Team
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-sagemaker
+    fundingApproach: Funding recouped
+    approvalWorkflow: Multi-Level Approval
+    provisioningSLA: 10 business days
+    serviceUseCases:
+      - Custom ML model training
+      - Batch inference pipelines
+      - Real-time prediction endpoints
+      - MLOps and model versioning
+    serviceOnboardingRequirements:
+      - cost_center
+      - project
+      - environment
+      - Instance Type (The name of the ML instance type, defaults to ml.t3.medium)
+      - >-
+        Volume size (The size, in GB, of the ML storage volume to attach to the notebook instance.
+        Defaults to 5 GB)
+      - S3 bucket (Does the Sagemaker instance need a new S3 bucket? Yes or No?)
+      - >-
+        Additional IAM Policies (Optional) (List of all SageMaker IAM Actions that the End User
+        plans to perform)
