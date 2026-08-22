@@ -1,0 +1,39 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-s3-vector-bucket
+  title: Amazon S3 Vector Bucket
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Storage
+    serviceDescription: >-
+      Vector buckets are a type of Amazon S3 bucket designed specifically for storing and querying
+      vector data. They are optimized for long-term vector storage with sub-second search times.
+    serviceExternalDoc: https://aws.amazon.com/s3/
+    serviceInternalDoc: >-
+      https://gitlab-pages.cbp.dhs.gov/cloud/documentation/cim-7266/platforms/development/amazon/s3.html#s3-vector-buckets
+    provisioningModel: Tier 3
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Ready
+    trmStatus: Restricted
+    trmRestrictionOwner: CIM Storage Platform
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-s3-vector-bucket
+    fundingApproach: Funding recouped
+    approvalWorkflow: Architecture Review
+    provisioningSLA: 10 business days
+    serviceUseCases:
+      - Vector embedding storage for AI/ML search
+      - Sub-second similarity search
+      - Retrieval-augmented generation (RAG) pipelines
+    serviceOnboardingRequirements:
+      - cost-center
+      - project
+      - environment
+      - quantity
+      - bucket-name
+      - actions (GetObject, PutObject, DeleteObject)
+      - bucket-type (vector)

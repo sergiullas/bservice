@@ -1,0 +1,34 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-athena
+  title: Amazon Athena
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Analytics
+    serviceDescription: >-
+      Amazon Athena is an interactive query service that makes it easy to analyze data in Amazon S3
+      using standard SQL. Athena is serverless, so there is no infrastructure to manage, and you pay
+      only for the queries that you run.
+    serviceExternalDoc: https://docs.aws.amazon.com/athena/
+    serviceInternalDoc: ./platforms/development/amazon/athena
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-athena
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Ad hoc SQL analysis over S3 data
+      - Serverless querying for data lake workloads
+      - Log and clickstream analysis
+    serviceOnboardingRequirements:
+      - cost-center
+      - project
+      - environment

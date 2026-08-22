@@ -1,0 +1,32 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-guard-duty
+  title: Amazon Guard Duty
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Security Scanning
+    serviceDescription: >-
+      Amazon GuardDuty is a managed threat detection service that continuously monitors your AWS
+      environment for malicious activity, unauthorized behavior, and security compromises. It uses
+      machine learning, anomaly detection, and integrated threat intelligence to analyze data across
+      multiple AWS sources.
+    serviceExternalDoc: https://aws.amazon.com/guardduty/
+    serviceInternalDoc: >-
+      https://cloud-docs.cbp.dhs.gov/governance/compliancefaq.html#threat-monitoring-and-compliance-standards
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-guard-duty
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Continuous threat detection
+      - Anomaly and unauthorized-behavior monitoring
+      - Automated security finding triage

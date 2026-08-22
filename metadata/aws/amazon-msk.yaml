@@ -1,0 +1,41 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-msk
+  title: Amazon MSK
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Streaming
+    serviceDescription: >-
+      AWS MSK (Managed Streaming for Apache Kafka) is a fully managed service that simplifies
+      running Apache Kafka applications on AWS. It handles infrastructure tasks like provisioning,
+      scaling, patching, and multi-AZ replication, letting you build real-time data pipelines and
+      streaming applications without managing the underlying servers.
+    serviceExternalDoc: https://docs.aws.amazon.com/msk/
+    serviceInternalDoc: ./platforms/development/amazon/msk
+    provisioningModel: Tier 2
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-msk
+    fundingApproach: Funding recouped
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 5 business days
+    serviceUseCases:
+      - Real-time streaming data pipelines
+      - Event-driven microservice communication
+      - Kafka workload migration to managed infrastructure
+    serviceOnboardingRequirements:
+      - cost-center
+      - project
+      - environment
+      - >-
+        number-of-nodes (non-prod defaults to a 3 node cluster unless requested otherwise; prod has
+        a minimum of 6 nodes, in increments of 3)
+      - >-
+        For PROD, the Amazon EC2 instance type to use for brokers (kafka.m5.large, kafka.m5.xlarge,
+        kafka.m5.2xlarge, kafka.m5.4xlarge, kafka.m5.12xlarge, or kafka.m5.24xlarge)

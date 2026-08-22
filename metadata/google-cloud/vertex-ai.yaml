@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: vertex-ai
+  title: Vertex AI
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: Google Cloud
+    serviceCategory: AI & Machine Learning
+    serviceDescription: Unified ML platform to build, deploy, and scale AI models and MLOps pipelines on Google Cloud.
+    serviceExternalDoc: https://cloud.google.com/docs
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 3
+    cloudAto:
+      - MAGE
+    serviceOwner: Carol Danvers
+    serviceLimitations: Quota increases require 5-business-day lead time.
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Divest
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#vertex-ai
+    fundingApproach: Funding recouped
+    approvalWorkflow: Architecture Review
+    provisioningSLA: 10 business days
+    serviceUseCases:
+      - Custom model training at scale
+      - Feature store management
+      - Model monitoring and explainability
+      - Pipeline orchestration

@@ -1,0 +1,36 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: aws-glue
+  title: AWS Glue
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Analytics
+    serviceDescription: >-
+      AWS Glue is a serverless data integration service that makes it easy to discover, prepare, and
+      combine data for analytics, machine learning, and application development. AWS Glue provides
+      all the capabilities needed for data integration so that you can start analyzing your data and
+      putting it to use in minutes instead of months.
+    serviceExternalDoc: https://docs.aws.amazon.com/glue/
+    serviceInternalDoc: ./platforms/development/amazon/glue
+    provisioningModel: Tier 2
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-glue
+    fundingApproach: ECSD pay
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 3 business days
+    serviceUseCases:
+      - ETL job orchestration
+      - Data catalog and schema discovery
+      - Serverless data preparation pipelines
+    serviceOnboardingRequirements:
+      - cost-center
+      - project
+      - environment
+      - Requested name for glue-db

@@ -1,0 +1,30 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: auto-scaling
+  title: Auto-Scaling
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Container Platform
+    serviceDescription: >-
+      Automatically adjusts the number of compute resources in your application to maintain steady,
+      predictable performance at the lowest possible cost. In EKS, this is often handled by
+      Horizontal Pod Autoscalers (HPAs).
+    serviceExternalDoc: https://docs.aws.amazon.com/autoscaling/
+    serviceInternalDoc: ./platforms/cicd/eks/auto-scaling
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#auto-scaling
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Horizontal pod autoscaling in EKS
+      - Elastic capacity for variable traffic
+      - Cost-optimized compute scaling

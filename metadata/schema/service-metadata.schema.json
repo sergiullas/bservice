@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://servicelog.internal/schema/service-metadata.schema.json",
+  "title": "ServiceLog Service Metadata",
+  "description": "Canonical machine-readable contract for CSP-owned service metadata YAML documents. Each document describes exactly one cloud service offering, in a Backstage-compatible Resource envelope. The platform (ServiceLog) owns this schema and its controlled vocabularies; CSP teams own the values inside it for the services they maintain.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": {
+      "const": "backstage.io/v1alpha1",
+      "description": "Backstage-compatible envelope version. Fixed so documents remain ingestible by a future Backstage Catalog without a rewrite."
+    },
+    "kind": {
+      "const": "Resource",
+      "description": "Backstage entity kind. Every ServiceLog service-offering document is a Resource."
+    },
+    "metadata": { "$ref": "#/$defs/metadata" },
+    "spec": { "$ref": "#/$defs/spec" }
+  },
+  "$defs": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "title"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Stable machine-readable identifier for the service. Must be unique across the entire loaded catalog (enforced across documents, not just within one file). Becomes Service.id.",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "description": "Human-readable display name. Becomes Service.serviceName.",
+          "minLength": 1
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "profile"],
+      "properties": {
+        "type": {
+          "const": "service-offering",
+          "description": "Backstage Resource subtype. Fixed for every ServiceLog document."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Backstage Catalog ownership / group reference (e.g. group:default/example-team). This is Backstage entity ownership, NOT the ServiceLog-facing Service Owner -- it must never be normalized into Service.serviceOwner. Optional and intentionally omitted in prototype data where no real owning group is known; do not populate with an invented value.",
+          "minLength": 1
+        },
+        "lifecycle": {
+          "type": "string",
+          "description": "Backstage lifecycle metadata (e.g. production, experimental). Not a ServiceLog UI field. Optional.",
+          "minLength": 1
+        },
+        "profile": { "$ref": "#/$defs/profile" }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "description": "ServiceLog-facing metadata. Normalizes 1:1 into the Service model consumed by the UI.",
+      "additionalProperties": false,
+      "required": [
+        "cloudProvider",
+        "serviceCategory",
+        "serviceDescription",
+        "serviceExternalDoc",
+        "serviceInternalDoc",
+        "provisioningModel",
+        "cloudAto",
+        "serviceOwner",
+        "fedRampStatus",
+        "trmStatus",
+        "trmLink",
+        "fundingApproach",
+        "approvalWorkflow",
+        "provisioningSLA",
+        "serviceUseCases"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": { "trmStatus": { "const": "Restricted" } },
+            "required": ["trmStatus"]
+          },
+          "then": { "required": ["trmRestrictionOwner"] }
+        }
+      ],
+      "properties": {
+        "cloudProvider": {
+          "description": "Owning CSP. Controlled vocabulary -- adding a new provider requires a schema change, not a new YAML value.",
+          "enum": ["AWS", "Azure", "Google Cloud"]
+        },
+        "serviceCategory": {
+          "description": "Controlled vocabulary for grouping in the ServiceLog UI. Centrally governed so spelling variants (e.g. 'AI & Machine Learning' vs 'AI and Machine Learning') never silently create duplicate categories.",
+          "enum": [
+            "AI & Machine Learning",
+            "Analytics",
+            "Compute",
+            "Container Platform",
+            "Customer Engagement",
+            "Database",
+            "Identity & Access Management",
+            "Infrastructure & Platforms",
+            "Messaging",
+            "Migration & Transfer",
+            "Monitoring & Management",
+            "Networking",
+            "Secret Management",
+            "Security",
+            "Security Scanning",
+            "Storage",
+            "Streaming"
+          ]
+        },
+        "serviceDescription": {
+          "type": "string",
+          "description": "Long-form description shown in the card and detail panel.",
+          "minLength": 1
+        },
+        "serviceExternalDoc": {
+          "type": "string",
+          "description": "Public/vendor documentation link.",
+          "format": "uri"
+        },
+        "serviceInternalDoc": {
+          "type": "string",
+          "description": "Internal documentation link. May be a full URL or a path relative to the internal docs portal, matching how CSP source metadata records it.",
+          "format": "uri-reference",
+          "minLength": 1
+        },
+        "provisioningModel": {
+          "description": "Controlled vocabulary for provisioning tier.",
+          "enum": ["Tier 1", "Tier 2", "Tier 3", "Tier 4"]
+        },
+        "cloudAto": {
+          "type": "array",
+          "description": "Cloud ATO(s) covering this service. Controlled vocabulary array (future multi-select); current prototype data carries exactly one value per service.",
+          "items": { "enum": ["MAGE", "CACE", "CMAA"] },
+          "uniqueItems": true
+        },
+        "serviceOwner": {
+          "type": "string",
+          "description": "ServiceLog-facing accountable person for this service. A person, not a team/group. Distinct from spec.owner (Backstage Catalog ownership).",
+          "minLength": 1
+        },
+        "serviceLimitations": {
+          "type": "string",
+          "description": "Optional caveat surfaced as a warning in the detail panel.",
+          "minLength": 1
+        },
+        "fedRampStatus": {
+          "description": "Controlled vocabulary for FedRAMP authorization status.",
+          "enum": [
+            "Initial Implementation",
+            "FedRAMP Ready",
+            "Agency Authorization In Process",
+            "FedRAMP In Process",
+            "FedRAMP Certified"
+          ]
+        },
+        "trmStatus": {
+          "description": "Controlled vocabulary for Technical Reference Model status. Exactly these four values -- an unrecognized value (e.g. a typo, or an invented status) must fail validation rather than being coerced into one of these.",
+          "enum": ["Permitted", "Restricted", "Divest", "Prohibited"]
+        },
+        "trmRestrictionOwner": {
+          "type": "string",
+          "description": "Jira/Outlook-style group responsible for a Restricted service. A group, not a person. Required when trmStatus is Restricted; must not be set otherwise the field is left absent.",
+          "minLength": 1
+        },
+        "trmLink": {
+          "type": "string",
+          "description": "Link into the authoritative TRM reference for this service.",
+          "format": "uri"
+        },
+        "fundingApproach": {
+          "description": "Controlled vocabulary for how provisioning is funded.",
+          "enum": ["ECSD pay", "Funding recouped"]
+        },
+        "approvalWorkflow": {
+          "description": "Controlled vocabulary for the approval path required to provision this service.",
+          "enum": ["Auto-Approved", "Manager Approval", "Security Review", "Architecture Review", "Multi-Level Approval"]
+        },
+        "provisioningSLA": {
+          "type": "string",
+          "description": "Human-readable turnaround time for provisioning (e.g. 'Same day', '5 business days').",
+          "minLength": 1
+        },
+        "serviceUseCases": {
+          "type": "array",
+          "description": "Common use cases shown in the detail panel.",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        },
+        "serviceOnboardingRequirements": {
+          "type": "array",
+          "description": "Onboarding/intake fields required to request this service, as clean strings -- never legacy HTML or hover-tooltip markup.",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

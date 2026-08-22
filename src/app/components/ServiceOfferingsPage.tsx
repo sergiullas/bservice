@@ -2,9 +2,13 @@ import React, { useMemo, useRef, useState } from 'react';
 import { FilterBar } from './FilterBar';
 import { ServiceCard } from './ServiceCard';
 import { ServiceDetailDrawer } from './ServiceDetailDrawer';
-import { services, Service, CATEGORIES, TrmStatus } from '../data/services';
+import { Service, TrmStatus } from '../data/types';
 
-export function ServiceOfferingsPage() {
+interface ServiceOfferingsPageProps {
+  services: Service[];
+}
+
+export function ServiceOfferingsPage({ services }: ServiceOfferingsPageProps) {
   const [search, setSearch] = useState('');
   const [selectedProviders, setSelectedProviders] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -17,6 +21,9 @@ export function ServiceOfferingsPage() {
     setSelectedService(service);
   };
 
+  const providerOptions = useMemo(() => Array.from(new Set(services.map((service) => service.cloudProvider))).sort(), [services]);
+  const categoryOptions = useMemo(() => Array.from(new Set(services.map((service) => service.serviceCategory))).sort(), [services]);
+
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
     return services.filter((service) => {
@@ -27,14 +34,13 @@ export function ServiceOfferingsPage() {
         .some((value) => value.toLowerCase().includes(query));
       return matchesProvider && matchesCategory && matchesTrm && matchesSearch;
     });
-  }, [search, selectedProviders, selectedCategories, selectedTrmStatuses]);
+  }, [services, search, selectedProviders, selectedCategories, selectedTrmStatuses]);
 
   const grouped = useMemo(() => filtered.reduce((map, service) => {
     (map[service.serviceCategory] ??= []).push(service);
     return map;
   }, {} as Record<string, Service[]>), [filtered]);
-  const visibleCategories = (CATEGORIES.filter((category) => category !== 'All') as string[])
-    .filter((category) => grouped[category]?.length);
+  const visibleCategories = categoryOptions.filter((category) => grouped[category]?.length);
   const showFlat = selectedCategories.length === 1;
   const clearAll = () => { setSearch(''); setSelectedProviders([]); setSelectedCategories([]); setSelectedTrmStatuses([]); };
 
@@ -45,7 +51,7 @@ export function ServiceOfferingsPage() {
         <p className="max-w-[560px] text-[14px] leading-[1.6] text-[#555]">Discover the cloud capabilities available to you, see whether approval is required, and learn how to get started.</p>
       </header>
 
-      <FilterBar search={search} onSearchChange={setSearch} selectedProviders={selectedProviders} onProvidersChange={setSelectedProviders} selectedCategories={selectedCategories} onCategoriesChange={setSelectedCategories} selectedTrmStatuses={selectedTrmStatuses} onTrmStatusesChange={setSelectedTrmStatuses} totalCount={services.length} filteredCount={filtered.length} onClearAll={clearAll} />
+      <FilterBar search={search} onSearchChange={setSearch} providerOptions={providerOptions} selectedProviders={selectedProviders} onProvidersChange={setSelectedProviders} categoryOptions={categoryOptions} selectedCategories={selectedCategories} onCategoriesChange={setSelectedCategories} selectedTrmStatuses={selectedTrmStatuses} onTrmStatusesChange={setSelectedTrmStatuses} totalCount={services.length} filteredCount={filtered.length} onClearAll={clearAll} />
 
       {filtered.length === 0 ? <div className="py-16 text-center text-[14px]"><p className="text-slate-600">No service offerings match your search and filters.</p><button type="button" onClick={clearAll} className="mt-2 font-medium text-[#1565C0] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1565C0]">Clear all</button></div> : showFlat ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{filtered.map((service) => <ServiceCard key={service.id} service={service} onSelect={handleSelect} headingLevel={2} />)}</div>

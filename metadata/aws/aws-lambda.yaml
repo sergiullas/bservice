@@ -1,0 +1,68 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: aws-lambda
+  title: AWS Lambda
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Compute
+    serviceDescription: >-
+      AWS Lambda is a serverless, event-driven compute service that lets you run code for virtually
+      any type of application or backend service without provisioning or managing servers.
+    serviceExternalDoc: https://docs.aws.amazon.com/lambda/
+    serviceInternalDoc: ./platforms/development/amazon/lambda
+    provisioningModel: Tier 1
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-lambda
+    fundingApproach: ECSD pay
+    approvalWorkflow: Auto-Approved
+    provisioningSLA: Same day
+    serviceUseCases:
+      - Event-driven microservices
+      - API backend functions
+      - Scheduled data processing
+      - S3 trigger workflows
+    serviceOnboardingRequirements:
+      - cost_center
+      - project
+      - environment
+      - package_type ("Image" or "Zip")
+      - Description
+      - handler
+      - >-
+        Memory_size (defaults to 128MB) (Note- Amount of memory in MB your Lambda Function can use
+        at runtime.)
+      - >-
+        Timeout (defaults to seconds) (Note- The amount of time your Lambda Function has to run in
+        seconds)
+      - >-
+        Concurrency (defaults to -1) (Note- The amount of reserved concurrent executions for this
+        lambda function. A value of 0 disables lambda from being triggered and -1 removes any
+        concurrency limitations.)
+      - tracing_config ("PassThrough" or "Active")
+      - >-
+        Environment Variables (No PII or Sensitive data) (Optional) (Note- Environment variables
+        will be added to the TFE workspace and hence cannot contain any sensitive data.)
+      - >-
+        Runtime (Required for "Zip" file-based deployments) (Note- Please see Cloud Docs for
+        supported values.)
+      - >-
+        GitLab Artifacts Repository for Jenkins Pipeline Deployment (Note- CME needs this for
+        setting up Jenkinsfile / config.json)
+      - >-
+        File System Configuration - EFS Resource Name (Optional) (Create new or use an existing
+        one?; mountpath (should start with /mnt))
+      - >-
+        Dead Letter Configuration – SQS DLQ Resource Name (Optional) (Create a new DLQ or use an
+        existing one?)
+      - >-
+        Lambda Trigger Configuration (Optional) (S3 Bucket Name (Create a new one or use an existing
+        one?); SQS Resource Name (Create a new one or use an existing one?); EventBridge (Optional)
+        (Schedule_expression - The scheduling expression. For example, cron(0 20 * * ? *) or rate(5
+        minutes). At least one of schedule_expression or event_pattern is required.))

@@ -1,0 +1,40 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-bedrock
+  title: Amazon Bedrock
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: AI & Machine Learning
+    serviceDescription: >-
+      Amazon Bedrock is a fully managed service from Amazon Web Services (AWS) that provides access
+      to a variety of powerful foundation models (FMs) from leading AI companies, including
+      Anthropic, Meta, and Cohere, as well as Amazon's own Titan family of models. It is designed to
+      simplify the development of generative AI applications without the need to manage
+      infrastructure.
+    serviceExternalDoc: https://docs.aws.amazon.com/bedrock/
+    serviceInternalDoc: ./platforms/development/amazon/bedrock
+    provisioningModel: Tier 3
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    serviceLimitations: Not approved for PII or PHI workloads.
+    fedRampStatus: FedRAMP Ready
+    trmStatus: Restricted
+    trmRestrictionOwner: CIM AI Platform Team
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-bedrock
+    fundingApproach: Funding recouped
+    approvalWorkflow: Multi-Level Approval
+    provisioningSLA: 10 business days
+    serviceUseCases:
+      - Content generation and summarization
+      - Document analysis and extraction
+      - Code generation assistance
+      - Conversational AI prototyping
+    serviceOnboardingRequirements:
+      - cost_center
+      - project
+      - environment
+      - TRM Link to the requested Large Language Model (LLM)

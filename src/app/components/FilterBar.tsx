@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Check, ChevronDown, Search, X } from 'lucide-react';
-import { PROVIDERS, CATEGORIES, TrmStatus } from '../data/services';
+import { TrmStatus } from '../data/types';
 import { TRM_STYLES } from './ServiceCard';
-interface FilterBarProps { search: string; onSearchChange: (value: string) => void; selectedProviders: string[]; onProvidersChange: (providers: string[]) => void; selectedCategories: string[]; onCategoriesChange: (value: string[]) => void; selectedTrmStatuses: TrmStatus[]; onTrmStatusesChange: (value: TrmStatus[]) => void; totalCount: number; filteredCount: number; onClearAll: () => void; }
+interface FilterBarProps { search: string; onSearchChange: (value: string) => void; providerOptions: string[]; selectedProviders: string[]; onProvidersChange: (providers: string[]) => void; categoryOptions: string[]; selectedCategories: string[]; onCategoriesChange: (value: string[]) => void; selectedTrmStatuses: TrmStatus[]; onTrmStatusesChange: (value: TrmStatus[]) => void; totalCount: number; filteredCount: number; onClearAll: () => void; }
 const TRM_STATUSES: TrmStatus[] = ['Permitted', 'Restricted', 'Divest', 'Prohibited'];
-const PROVIDER_OPTIONS = PROVIDERS.filter((provider) => provider !== 'All') as string[];
-const CATEGORY_OPTIONS = CATEGORIES.filter((category) => category !== 'All') as string[];
-export function FilterBar({ search, onSearchChange, selectedProviders, onProvidersChange, selectedCategories, onCategoriesChange, selectedTrmStatuses, onTrmStatusesChange, totalCount, filteredCount, onClearAll }: FilterBarProps) {
+export function FilterBar({ search, onSearchChange, providerOptions, selectedProviders, onProvidersChange, categoryOptions, selectedCategories, onCategoriesChange, selectedTrmStatuses, onTrmStatusesChange, totalCount, filteredCount, onClearAll }: FilterBarProps) {
+  const PROVIDERS = ['All', ...providerOptions];
+  const PROVIDER_OPTIONS = providerOptions;
+  const CATEGORY_OPTIONS = categoryOptions;
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const categoriesRef = useRef<HTMLDivElement>(null);
   const categoriesTriggerRef = useRef<HTMLButtonElement>(null);

@@ -21,10 +21,9 @@ export type ApprovalWorkflow =
   | "Multi-Level Approval";
 
 /**
- * ServiceLog prototype model. Fields sourced from the implementation team's
- * metadata (see data/sourceCatalog.ts + data/normalize.ts) are mapped in via
- * buildAwsServices(); everything else is explicit prototype enrichment
- * (data/awsEnrichment.ts for AWS records, inline for legacy records).
+ * ServiceLog prototype model. Normalized from CSP-owned YAML metadata
+ * (see /metadata) via the shared schema in
+ * metadata/schema/service-metadata.schema.json and metadata/lib/validate.ts.
  */
 export interface Service {
   id: string;

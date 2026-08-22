@@ -1,0 +1,42 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-rds-sql-server
+  title: Amazon RDS SQL Server
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Database
+    serviceDescription: >-
+      Amazon RDS SQL Server is a relational database management system developed by Microsoft.
+      Amazon RDS for SQL Server supports the "License Included" licensing model. You do not need
+      separately purchased Microsoft SQL Server licenses.
+    serviceExternalDoc: https://aws.amazon.com/rds/sqlserver/
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 2
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP Certified
+    trmStatus: Permitted
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-rds-sql-server
+    fundingApproach: Funding recouped
+    approvalWorkflow: Manager Approval
+    provisioningSLA: 3 business days
+    serviceUseCases:
+      - SQL Server-dependent COTS applications
+      - Windows application backends
+      - Licensed database migrations
+    serviceOnboardingRequirements:
+      - cost_center
+      - project
+      - environment
+      - Quantity
+      - Engine (SQL Server)
+      - Instance Type/Instance Class
+      - Multi-AZ
+      - Storage
+      - "RDS Proxy needed (without native connection pooling capabilities): Yes/No"
+      - "Target database endpoint: If yes"
+      - "Serverless (Aurora PostgreSQL/MySQL only): Yes/No"

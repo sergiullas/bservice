@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: gemini-api
+  title: Gemini API
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: Google Cloud
+    serviceCategory: AI & Machine Learning
+    serviceDescription: Access Google's Gemini family of multimodal models for text, image, and code generation tasks.
+    serviceExternalDoc: https://cloud.google.com/docs
+    serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+    provisioningModel: Tier 2
+    cloudAto:
+      - MAGE
+    serviceOwner: Carol Danvers
+    serviceLimitations: Not approved for regulated data classification.
+    fedRampStatus: FedRAMP In Process
+    trmStatus: Divest
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#gemini-api
+    fundingApproach: Funding recouped
+    approvalWorkflow: Security Review
+    provisioningSLA: 5 business days
+    serviceUseCases:
+      - Multimodal content analysis
+      - Text and code generation
+      - Structured data extraction
+      - Conversational agents

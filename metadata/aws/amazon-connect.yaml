@@ -1,0 +1,28 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: amazon-connect
+  title: Amazon Connect
+spec:
+  type: service-offering
+  profile:
+    cloudProvider: AWS
+    serviceCategory: Customer Engagement
+    serviceDescription: A self-service, cloud-based contact center service that scales to support any size business.
+    serviceExternalDoc: https://docs.aws.amazon.com/connect/
+    serviceInternalDoc: ./governance/request-access#amazon-connect
+    provisioningModel: Tier 3
+    cloudAto:
+      - CACE
+    serviceOwner: Natasha Romanoff
+    fedRampStatus: FedRAMP In Process
+    trmStatus: Restricted
+    trmRestrictionOwner: CIM Application Platform Team
+    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-connect
+    fundingApproach: Funding recouped
+    approvalWorkflow: Security Review
+    provisioningSLA: 10 business days
+    serviceUseCases:
+      - Cloud-based contact center
+      - Customer support call routing
+      - Interactive voice response (IVR) flows

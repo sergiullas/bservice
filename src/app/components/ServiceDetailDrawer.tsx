@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Tooltip from '@material-ui/core/Tooltip';
 import { AlertTriangle, ArrowUpRight, ChevronDown, ChevronUp, ExternalLink, X } from 'lucide-react';
-import { FedRampStatus, ProvisioningModel, Service } from '../data/services';
+import { FedRampStatus, ProvisioningModel, Service } from '../data/types';
 import { AwsLogo, AzureLogo, GoogleCloudLogo } from './ProviderLogo';
 import { TRM_STYLES } from './ServiceCard';
 

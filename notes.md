@@ -1,3 +1,22 @@
+<!--
+LEGACY / HISTORICAL REFERENCE ONLY -- NOT THE ACTIVE METADATA CONTRACT.
+
+This file predates STORY 2.2 and is kept only as a historical example of
+the shape the implementation team's source metadata originally took. It
+contains stale concepts (approvalWorkflow: requestable, atoStatus,
+statusBadge, trmStatus: Approved, team-valued serviceOwner, serviceContact,
+environments, oemModel, HTML embedded in a URL field) that are NOT part of
+the governed schema and will fail validation against it.
+
+The authoritative, currently-enforced contract is:
+  - Schema:        metadata/schema/service-metadata.schema.json
+  - Service data:  metadata/aws/, metadata/azure/, metadata/google-cloud/
+  - Validator:     npm run validate:metadata (metadata/lib/validate.ts)
+
+Do not copy fields from this file into new service YAML without checking
+them against the schema above.
+-->
+
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
