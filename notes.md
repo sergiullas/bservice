@@ -10,7 +10,7 @@ the governed schema and will fail validation against it.
 
 The authoritative, currently-enforced contract is:
   - Schema:        metadata/schema/service-metadata.schema.json
-  - Service data:  metadata/aws/, metadata/azure/, metadata/google-cloud/
+  - Service data:  metadata/services.yaml (one aggregate catalog file)
   - Validator:     npm run validate:metadata (metadata/lib/validate.ts)
 
 Do not copy fields from this file into new service YAML without checking
