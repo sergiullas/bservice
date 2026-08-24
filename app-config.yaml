@@ -1,0 +1,31 @@
+# Experimental Backstage harness config for STORY 2.3 -- see
+# docs/backstage-compatibility.md. Intentionally minimal: no catalog,
+# search, techdocs, or scaffolder -- this harness exists only to prove the
+# ServiceLog frontend plugin and backend data seam inside real Backstage
+# chrome, with real (if trivial) auth. Not a production-host config.
+app:
+  title: ServiceLog Backstage Harness (experiment)
+  baseUrl: http://localhost:3000
+
+backend:
+  baseUrl: http://localhost:7007
+  listen:
+    port: 7007
+  cors:
+    origin: http://localhost:3000
+    methods: [GET, HEAD, OPTIONS]
+    credentials: true
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+
+auth:
+  providers:
+    guest: {}
+
+# STORY 2.3 checkpoint D: where the backend data adapter reads the Story
+# 2.2 CSP YAML from. Defaults to resolving the @servicelog/metadata
+# workspace package's real location if unset -- see
+# plugins/servicelog-backend/src/service/router.ts and
+# docs/backstage-compatibility.md section 10.
+# servicelog:
+#   metadataRoot: /absolute/path/to/metadata

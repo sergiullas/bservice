@@ -1,0 +1,8 @@
+/**
+ * ServiceLog product typeface. Only the @font-face-equivalent resource load
+ * lives here -- applying it to elements is a host concern (a global
+ * `body, *` rule for the standalone shell, a `.servicelog-scope`-qualified
+ * rule for the Backstage plugin), so that selector is intentionally not
+ * included in this shared file. See STORY 2.3 checkpoint B1.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700;800;900&family=Merriweather:ital,wght@0,400;0,700&display=swap');

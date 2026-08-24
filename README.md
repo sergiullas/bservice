@@ -584,6 +584,32 @@ ServiceLog owns:
 
 There should be no second Backstage-like shell rendered inside Backstage.
 
+## Running the experimental harness
+
+No real target host was available yet, so the current integration is proven
+against a documented experimental harness (`packages/app` + `packages/backend`
++ `plugins/servicelog` + `plugins/servicelog-backend`) rather than a
+production Backstage instance. The full compatibility record — Backstage
+version, frontend-system choice, React version, and every host constraint
+this surfaced — lives in
+[`docs/backstage-compatibility.md`](./docs/backstage-compatibility.md).
+
+Build every Backstage-side package (`@servicelog/core`, `@servicelog/metadata`,
+and both `plugins/*` packages) in the right order:
+
+```bash
+npm run build:backstage
+```
+
+Run the harness itself, in two terminals:
+
+```bash
+npm run start --workspace=backend
+npm run start --workspace=app
+```
+
+Then open http://localhost:3000.
+
 ---
 
 # V1 Product Baseline

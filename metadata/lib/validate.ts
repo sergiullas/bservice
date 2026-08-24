@@ -2,7 +2,7 @@ import Ajv2020 from "ajv/dist/2020.js";
 import type { ErrorObject } from "ajv";
 import addFormats from "ajv-formats";
 import schema from "../schema/service-metadata.schema.json" with { type: "json" };
-import type { Service } from "../../src/app/data/types";
+import type { Service } from "@servicelog/core";
 
 /**
  * Actionable validation error: identifies the catalog file, the affected

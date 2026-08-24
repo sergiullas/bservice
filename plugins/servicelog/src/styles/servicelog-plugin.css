@@ -1,0 +1,131 @@
+/**
+ * STORY 2.3 checkpoint B1 -- plugin-safe styling strategy.
+ *
+ * This is a Tailwind *build entry*, compiled ahead of time by the
+ * `build:css` script (see package.json) into `dist/styles/servicelog.css`,
+ * which is what the plugin actually imports (see
+ * ../components/ServiceLogPage.tsx). It is never loaded directly by
+ * webpack/Tailwind at app-build time.
+ *
+ * Two deliberate differences from the standalone host's
+ * src/styles/{tailwind,theme,fonts}.css, both required so this plugin
+ * cannot contaminate unrelated Backstage pages:
+ *
+ * 1. No Tailwind preflight. `@import "tailwindcss"` (what the standalone
+ *    host uses) bundles preflight + theme + utilities; preflight is a
+ *    global reset (`*, html, body, headings, ...`). Importing only
+ *    `theme.css` + `utilities.css` skips it entirely.
+ * 2. The base-layer reset those preflight-adjacent rules replace is
+ *    re-declared here scoped under `.servicelog-scope` instead of bare
+ *    `*`/`body`/`html`/element selectors -- ServiceLogPage wraps
+ *    `ServiceLogFeature` in that class (and Dialog's portal container
+ *    carries the same class, so portaled content participates in the
+ *    scope too -- see @servicelog/core's components/primitives/Dialog.tsx).
+ *
+ * That covers what's hand-written in this file, but not what Tailwind
+ * itself generates from it: every utility selector from `utilities.css`
+ * and the `:root, :host` theme-variable block from `theme.css` come out of
+ * the compiler unscoped, and @servicelog/core/styles/tokens.css's own
+ * `:root`/`.dark` blocks are unscoped too (deliberately -- see that file's
+ * header, it's genuinely host-neutral *input*, meant to be loaded as-is by
+ * hosts that have no reason to scope it, like the standalone app). Rather
+ * than hand-author a scoped duplicate of everything Tailwind generates,
+ * ../scripts/build-css.mjs post-processes the compiled output with
+ * postcss-prefix-selector after this file is compiled, rewriting every
+ * selector to require `.servicelog-scope` -- as an ancestor for ordinary
+ * selectors, or, for `:root`/`:host`/`.dark`, as the scope element itself
+ * (custom properties cascade to descendants only when declared on an
+ * ancestor/self, never via a "descendant of :root" selector, which can't
+ * match anything). See that script for the exact transform and the
+ * `@property`/`@keyframes` exception it can't do anything about, and
+ * docs/backstage-compatibility.md section 4b for the verified result.
+ */
+/* CSS layer precedence is set by the order layer *names* are first seen,
+   not where their content physically appears -- and a bare `@layer
+   name1, name2;` statement (like an @import, allowed before other rules)
+   is exactly how you declare that order upfront without content yet.
+   Skipping the full `@import "tailwindcss"` (done deliberately, to omit
+   preflight -- see above) means that canonical order never gets
+   established automatically, so it has to be declared here. Without this,
+   the plugin's own `@layer base` below -- introduced textually after
+   `utilities` -- would out-rank it, and its `font: inherit`/`color:
+   inherit` reset would silently override every Tailwind utility
+   (`text-[16px]`, `font-semibold`, provider-icon backgrounds, ...),
+   which is exactly what happened before this line was added. */
+@layer theme, base, components, utilities;
+
+/* @import rules must precede all other rules (aside from @charset/@layer
+   statements) in the final bundled stylesheet -- @servicelog/core's
+   fonts.css is nothing but a bare `@import url(...)`, so it has to be
+   ordered first here, ahead of tokens.css's @layer content, or Tailwind's
+   bundler would emit it after that @layer block and browsers would drop it
+   as spec-invalid. */
+@import "@servicelog/core/styles/fonts.css";
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "tw-animate-css";
+
+@import "@servicelog/core/styles/tokens.css";
+
+/* Tailwind v4 auto-detects source files by walking the filesystem from
+   where it's invoked, and does not follow node_modules workspace symlinks
+   for that scan. @servicelog/core's actual source lives outside this
+   package's own directory, so it has to be named explicitly. */
+@source "../../../../src/app/**/*.{ts,tsx}";
+
+@layer base {
+  /* Everything below reproduces the parts of Tailwind's own preflight
+     (node_modules/tailwindcss/preflight.css) that ServiceLog actually
+     depends on, scoped under .servicelog-scope instead of bare universal
+     and bare-element selectors -- see the file header. Omitting the
+     button/input reset below was a real, verified bug (not a hypothetical
+     one): ServiceCard's full-card click overlay
+     (a button positioned absolute/inset-0/z-0) has no explicit bg-*
+     class of its own -- correctly, since standalone's preflight already
+     makes browser button backgrounds transparent -- so without this reset
+     the overlay rendered with the browser's opaque default button
+     background and visually hid the entire card underneath it. The same
+     missing-explicit-background pattern also affects the detail drawer's
+     icon-only buttons and several text-style toggle buttons across the
+     shared core. */
+  .servicelog-scope,
+  .servicelog-scope *,
+  .servicelog-scope *::before,
+  .servicelog-scope *::after {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+  }
+
+  .servicelog-scope {
+    @apply bg-background text-foreground;
+    font-size: var(--font-size);
+  }
+
+  .servicelog-scope :where(h1, h2, h3, h4, dt, dd, p, button, a, label) {
+    margin: 0;
+    color: inherit;
+    font: inherit;
+  }
+
+  .servicelog-scope :where(button, a) {
+    text-decoration: none;
+  }
+
+  .servicelog-scope :where(button, input, select, textarea) {
+    font: inherit;
+    color: inherit;
+    border-radius: 0;
+    background-color: transparent;
+    opacity: 1;
+  }
+
+  .servicelog-scope :where(svg) {
+    display: block;
+    vertical-align: middle;
+  }
+
+  .servicelog-scope :where(ol, ul) {
+    list-style: none;
+  }
+}

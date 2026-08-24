@@ -1,0 +1,54 @@
+{
+  "name": "@internal/plugin-servicelog",
+  "version": "0.0.1",
+  "private": true,
+  "description": "STORY 2.3 checkpoint C: the Backstage frontend plugin wrapper around the shared, host-neutral ServiceLog product core (@servicelog/core). Supplies ServiceLog content only -- Backstage owns the chrome around it.",
+  "backstage": {
+    "role": "frontend-plugin",
+    "pluginId": "servicelog",
+    "pluginPackages": [
+      "@internal/plugin-servicelog",
+      "@internal/plugin-servicelog-backend"
+    ]
+  },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build:css": "node scripts/build-css.mjs",
+    "prestart": "npm run build:css",
+    "prebuild": "npm run build:css",
+    "start": "backstage-cli package start",
+    "build": "backstage-cli package build",
+    "lint": "backstage-cli package lint",
+    "test": "backstage-cli package test",
+    "clean": "backstage-cli package clean"
+  },
+  "dependencies": {
+    "@backstage/core-components": "^0.18.13",
+    "@backstage/core-plugin-api": "^1.12.9",
+    "@backstage/frontend-plugin-api": "^0.18.0",
+    "@servicelog/core": "0.0.1",
+    "lucide-react": "0.487.0"
+  },
+  "devDependencies": {
+    "@backstage/cli": "^0.36.5",
+    "@backstage/frontend-dev-utils": "^0.1.5",
+    "@tailwindcss/cli": "4.3.3",
+    "@types/react": "^18.3.31",
+    "postcss": "^8.5.26",
+    "postcss-prefix-selector": "^2.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.2",
+    "tailwindcss": "4.3.3",
+    "tw-animate-css": "1.3.8"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
+  },
+  "files": [
+    "dist",
+    "config.d.ts"
+  ]
+}

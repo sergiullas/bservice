@@ -1,5 +1,5 @@
 import React from 'react';
-import svgPaths from '../../imports/CloudProviderLogos/svg-8kehzgdago';
+import svgPaths from '../assets/CloudProviderLogos/svg-8kehzgdago';
 
 export function AwsLogo({ size = 24 }: { size?: number }) {
   const h = Math.round(size * (16 / 27));
