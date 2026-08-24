@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { loadCatalog, validateDocument } from './validate';
+import { loadCatalog, validateCatalog } from './validate';
 
-function validDoc(overrides: Record<string, unknown> = {}) {
+function validEntry(overrides: Record<string, unknown> = {}) {
   return {
     apiVersion: 'backstage.io/v1alpha1',
     kind: 'Resource',
@@ -30,114 +30,124 @@ function validDoc(overrides: Record<string, unknown> = {}) {
   };
 }
 
-function withProfile(overrides: Record<string, unknown>) {
-  return validDoc(overrides);
+function catalogWithProfile(overrides: Record<string, unknown>) {
+  return { services: [validEntry(overrides)] };
 }
 
-describe('validateDocument', () => {
-  it('1. accepts a valid service document', () => {
-    expect(validateDocument(validDoc(), 'fixture.yaml')).toEqual([]);
+describe('validateCatalog', () => {
+  it('1. accepts a catalog containing a valid service entry', () => {
+    expect(validateCatalog({ services: [validEntry()] }, 'fixture.yaml')).toEqual([]);
   });
 
   it('2. rejects an invented trmStatus value ("Dangerous") rather than accepting or coercing it', () => {
-    const errors = validateDocument(withProfile({ trmStatus: 'Dangerous' }), 'fixture.yaml');
+    const errors = validateCatalog(catalogWithProfile({ trmStatus: 'Dangerous' }), 'fixture.yaml');
     expect(errors.length).toBeGreaterThan(0);
-    const error = errors.find((e) => e.path === '/spec/profile/trmStatus');
+    const error = errors.find((e) => e.path === 'services[0].spec.profile.trmStatus');
     expect(error).toBeDefined();
     expect(error!.expected).toContain('Permitted');
     expect(error!.expected).not.toContain('Dangerous');
   });
 
   it('3. rejects an invalid Cloud ATO value', () => {
-    const errors = validateDocument(withProfile({ cloudAto: ['NOT_A_REAL_ATO'] }), 'fixture.yaml');
-    expect(errors.some((e) => e.path === '/spec/profile/cloudAto/0')).toBe(true);
+    const errors = validateCatalog(catalogWithProfile({ cloudAto: ['NOT_A_REAL_ATO'] }), 'fixture.yaml');
+    expect(errors.some((e) => e.path === 'services[0].spec.profile.cloudAto[0]')).toBe(true);
   });
 
   it('4. rejects an invalid provisioning model', () => {
-    const errors = validateDocument(withProfile({ provisioningModel: 'Tier 9' }), 'fixture.yaml');
-    expect(errors.some((e) => e.path === '/spec/profile/provisioningModel')).toBe(true);
+    const errors = validateCatalog(catalogWithProfile({ provisioningModel: 'Tier 9' }), 'fixture.yaml');
+    expect(errors.some((e) => e.path === 'services[0].spec.profile.provisioningModel')).toBe(true);
   });
 
   it('5. rejects an invalid FedRAMP status', () => {
-    const errors = validateDocument(withProfile({ fedRampStatus: 'Fully Authorized' }), 'fixture.yaml');
-    expect(errors.some((e) => e.path === '/spec/profile/fedRampStatus')).toBe(true);
+    const errors = validateCatalog(catalogWithProfile({ fedRampStatus: 'Fully Authorized' }), 'fixture.yaml');
+    expect(errors.some((e) => e.path === 'services[0].spec.profile.fedRampStatus')).toBe(true);
   });
 
   it('6. rejects an invalid approval workflow', () => {
-    const errors = validateDocument(withProfile({ approvalWorkflow: 'Rubber Stamp' }), 'fixture.yaml');
-    expect(errors.some((e) => e.path === '/spec/profile/approvalWorkflow')).toBe(true);
+    const errors = validateCatalog(catalogWithProfile({ approvalWorkflow: 'Rubber Stamp' }), 'fixture.yaml');
+    expect(errors.some((e) => e.path === 'services[0].spec.profile.approvalWorkflow')).toBe(true);
   });
 
   it('7. rejects an invalid funding approach', () => {
-    const errors = validateDocument(withProfile({ fundingApproach: 'Crowdfunded' }), 'fixture.yaml');
-    expect(errors.some((e) => e.path === '/spec/profile/fundingApproach')).toBe(true);
+    const errors = validateCatalog(catalogWithProfile({ fundingApproach: 'Crowdfunded' }), 'fixture.yaml');
+    expect(errors.some((e) => e.path === 'services[0].spec.profile.fundingApproach')).toBe(true);
   });
 
   it('8. rejects an invalid / unofficial cloud provider', () => {
-    const errors = validateDocument(withProfile({ cloudProvider: 'Oracle Cloud' }), 'fixture.yaml');
-    expect(errors.some((e) => e.path === '/spec/profile/cloudProvider')).toBe(true);
+    const errors = validateCatalog(catalogWithProfile({ cloudProvider: 'Oracle Cloud' }), 'fixture.yaml');
+    expect(errors.some((e) => e.path === 'services[0].spec.profile.cloudProvider')).toBe(true);
   });
 
   it('9. rejects a category spelling variant instead of silently creating a new category', () => {
-    const errors = validateDocument(withProfile({ serviceCategory: 'AI and Machine Learning' }), 'fixture.yaml');
-    const error = errors.find((e) => e.path === '/spec/profile/serviceCategory');
+    const errors = validateCatalog(catalogWithProfile({ serviceCategory: 'AI and Machine Learning' }), 'fixture.yaml');
+    const error = errors.find((e) => e.path === 'services[0].spec.profile.serviceCategory');
     expect(error).toBeDefined();
     expect(error!.expected).toContain('AI & Machine Learning');
   });
 
-  it('10. rejects a document missing required fields', () => {
-    const doc = validDoc();
+  it('10. rejects an entry missing required fields', () => {
+    const catalog = { services: [validEntry()] };
     // @ts-expect-error -- intentionally deleting a required field for the test
-    delete (doc.spec.profile as Record<string, unknown>).serviceDescription;
-    const errors = validateDocument(doc, 'fixture.yaml');
+    delete (catalog.services[0].spec.profile as Record<string, unknown>).serviceDescription;
+    const errors = validateCatalog(catalog, 'fixture.yaml');
     expect(errors.some((e) => e.message.includes('serviceDescription'))).toBe(true);
   });
 
   it('11. rejects Restricted without a trmRestrictionOwner', () => {
-    const errors = validateDocument(withProfile({ trmStatus: 'Restricted' }), 'fixture.yaml');
+    const errors = validateCatalog(catalogWithProfile({ trmStatus: 'Restricted' }), 'fixture.yaml');
     expect(errors.some((e) => e.message.includes('trmRestrictionOwner'))).toBe(true);
 
     // A trmRestrictionOwner alongside Restricted is fine.
     expect(
-      validateDocument(withProfile({ trmStatus: 'Restricted', trmRestrictionOwner: 'CIM Platform Team' }), 'fixture.yaml')
+      validateCatalog(
+        catalogWithProfile({ trmStatus: 'Restricted', trmRestrictionOwner: 'CIM Platform Team' }),
+        'fixture.yaml'
+      )
     ).toEqual([]);
   });
 
-  it('12. rejects duplicate service IDs across documents in the loaded catalog', () => {
-    const first = validDoc();
-    const second = validDoc();
+  it('12. rejects duplicate service IDs within the aggregate catalog', () => {
+    const first = validEntry();
+    const second = validEntry();
     second.metadata.title = 'Example Service (duplicate)';
-    const { services, errors } = loadCatalog([
-      { file: 'a.yaml', doc: first },
-      { file: 'b.yaml', doc: second },
-    ]);
+    const { services, errors } = loadCatalog({ services: [first, second] }, 'services.yaml');
     expect(services).toEqual([]);
     expect(errors.length).toBe(2);
     expect(errors.every((e) => e.message.includes('duplicate service id'))).toBe(true);
-    expect(errors.map((e) => e.file).sort()).toEqual(['a.yaml', 'b.yaml']);
+    expect(errors.map((e) => e.path).sort()).toEqual([
+      'services[0].metadata.name',
+      'services[1].metadata.name',
+    ]);
   });
 
   it('13. rejects stale/unknown profile fields rather than silently ignoring them', () => {
-    const errors = validateDocument(withProfile({ atoStatus: 'Approved', statusBadge: 'green' }), 'fixture.yaml');
+    const errors = validateCatalog(catalogWithProfile({ atoStatus: 'Approved', statusBadge: 'green' }), 'fixture.yaml');
     expect(errors.some((e) => e.message.includes('atoStatus'))).toBe(true);
   });
 
-  it('errors are actionable: identify file, field path, and expected values', () => {
-    const errors = validateDocument(withProfile({ trmStatus: 'Dangerous' }), 'my-service.yaml');
+  it('errors are actionable: identify file, entry index/id, field path, and expected values', () => {
+    const errors = validateCatalog(catalogWithProfile({ trmStatus: 'Dangerous' }), 'my-catalog.yaml');
     const error = errors[0];
-    expect(error.file).toBe('my-service.yaml');
-    expect(error.path).toBe('/spec/profile/trmStatus');
+    expect(error.file).toBe('my-catalog.yaml');
+    expect(error.path).toBe('services[0].spec.profile.trmStatus');
+    expect(error.serviceIndex).toBe(0);
+    expect(error.serviceId).toBe('aws-example-service');
     expect(error.invalidValue).toBe('Dangerous');
     expect(error.expected).toBeTruthy();
   });
 
   it('never accepts spec.owner as a substitute for spec.profile.serviceOwner', () => {
-    const doc = validDoc();
-    (doc.spec as Record<string, unknown>).owner = 'group:default/example-team';
-    expect(validateDocument(doc, 'fixture.yaml')).toEqual([]);
+    const entry = validEntry();
+    (entry.spec as Record<string, unknown>).owner = 'group:default/example-team';
+    expect(validateCatalog({ services: [entry] }, 'fixture.yaml')).toEqual([]);
 
-    const { services } = loadCatalog([{ file: 'fixture.yaml', doc }]);
+    const { services } = loadCatalog({ services: [entry] }, 'fixture.yaml');
     expect(services[0].serviceOwner).toBe('Natasha Romanoff');
     expect(services[0]).not.toHaveProperty('owner');
+  });
+
+  it('rejects a catalog missing the services array', () => {
+    const errors = validateCatalog({}, 'fixture.yaml');
+    expect(errors.some((e) => e.message.includes('services'))).toBe(true);
   });
 });

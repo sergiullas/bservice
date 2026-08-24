@@ -4,6 +4,13 @@ CSP teams own their service metadata. The platform (ServiceLog) owns the
 metadata contract: field definitions, required/optional rules, and
 controlled vocabularies.
 
+For this prototype, the physical handoff to the carbon team is **one
+aggregate YAML catalog file**, `metadata/services.yaml`, containing all 76
+V1 services. This is the prototype integration format the carbon team
+asked for -- it does not change metadata ownership, which conceptually
+remains distributed by CSP, and it is not claimed as a permanent
+enterprise governance model.
+
 ## Layout
 
 ```
@@ -15,48 +22,57 @@ metadata/
 │                                       # (framework-agnostic: used by the
 │                                       # CLI, tests, and the standalone
 │                                       # runtime adapter alike)
-├── aws/                                # one YAML document per AWS service
-├── azure/                              # one YAML document per Azure service
-└── google-cloud/                       # one YAML document per Google Cloud service
+└── services.yaml                       # one YAML catalog containing every
+                                         # AWS, Azure, and Google Cloud service
 ```
 
-Each service is a single YAML file in a Backstage-shaped `Resource`
-envelope -- prepared for Backstage integration in a future story, but **not**
-yet valid for direct ingestion by a real Backstage Catalog: Backstage's own
-Resource entity model requires `spec.owner`, and this schema intentionally
-leaves it optional/absent here rather than inventing a value. Resolving the
-real owner and doing actual Catalog integration is Story 2.3 scope. Example,
-`metadata/aws/amazon-bedrock.yaml`:
+`metadata/services.yaml` is a single document: a `services` array of
+entries, each in a Backstage-shaped `Resource` envelope -- prepared for
+Backstage integration in a future story, but **not** yet valid for direct
+ingestion by a real Backstage Catalog: Backstage's own Resource entity
+model requires `spec.owner`, and this schema intentionally leaves it
+optional/absent here rather than inventing a value. Resolving the real
+owner and doing actual Catalog integration is Story 2.3 scope. Example
+entry:
 
 ```yaml
-apiVersion: backstage.io/v1alpha1
-kind: Resource
-metadata:
-  name: amazon-bedrock       # stable id -- must be unique across the whole catalog
-  title: Amazon Bedrock      # display name
-spec:
-  type: service-offering
-  # owner: group:default/example-team   # optional Backstage Catalog ownership --
-  #                                        NOT the same as profile.serviceOwner.
-  #                                        Omit rather than invent a value.
-  profile:                   # <- this is what normalizes into the ServiceLog UI model
-    cloudProvider: AWS
-    serviceCategory: AI & Machine Learning
-    serviceDescription: ...
-    serviceExternalDoc: https://docs.aws.amazon.com/bedrock/
-    serviceInternalDoc: ./platforms/development/amazon/bedrock
-    provisioningModel: Tier 3
-    cloudAto: [CACE]
-    serviceOwner: Natasha Romanoff        # a person, not a team
-    fedRampStatus: FedRAMP Ready
-    trmStatus: Restricted
-    trmRestrictionOwner: CIM AI Platform Team   # required when trmStatus: Restricted
-    trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-bedrock
-    fundingApproach: Funding recouped
-    approvalWorkflow: Multi-Level Approval
-    provisioningSLA: 10 business days
-    serviceUseCases: [...]
-    serviceOnboardingRequirements: [...]  # clean strings, never HTML/tooltip markup
+services:
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-bedrock       # stable id -- must be unique across the whole catalog
+      title: Amazon Bedrock      # display name
+    spec:
+      type: service-offering
+      # owner: group:default/example-team   # optional Backstage Catalog ownership --
+      #                                        NOT the same as profile.serviceOwner.
+      #                                        Omit rather than invent a value.
+      profile:                   # <- this is what normalizes into the ServiceLog UI model
+        cloudProvider: AWS
+        serviceCategory: AI & Machine Learning
+        serviceDescription: ...
+        serviceExternalDoc: https://docs.aws.amazon.com/bedrock/
+        serviceInternalDoc: ./platforms/development/amazon/bedrock
+        provisioningModel: Tier 3
+        cloudAto: [CACE]
+        serviceOwner: Natasha Romanoff        # a person, not a team
+        fedRampStatus: FedRAMP Ready
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM AI Platform Team   # required when trmStatus: Restricted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-bedrock
+        fundingApproach: Funding recouped
+        approvalWorkflow: Multi-Level Approval
+        provisioningSLA: 10 business days
+        serviceUseCases: [...]
+        serviceOnboardingRequirements: [...]  # clean strings, never HTML/tooltip markup
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-openai
+      title: Azure OpenAI Service
+    spec:
+      type: service-offering
+      profile: { ... }
 ```
 
 `spec.owner` (Backstage Catalog ownership) and `spec.profile.serviceOwner`
@@ -70,10 +86,17 @@ concept: a group, required only when `trmStatus` is `Restricted`.
 npm run validate:metadata
 ```
 
-Runs entirely in Node against the YAML on disk -- no React, no Vite build,
-no browser. Every failure names the file, the field path, the invalid
-value, and (where applicable) the values the contract allows. CI, an
-editor, or a future Backstage backend can all run the same check via
+Runs entirely in Node against `metadata/services.yaml` on disk -- no React,
+no Vite build, no browser. Every failure names the catalog file, the
+affected service entry (e.g. `services[12]`, plus its id when resolvable),
+the field path inside it, the invalid value, and (where applicable) the
+values the contract allows, for example:
+
+```
+services[12].spec.profile.trmStatus: invalid value -- must be one of: Permitted, Restricted, Divest, Prohibited
+```
+
+CI, an editor, or a future Backstage backend can all run the same check via
 `metadata/lib/validate.ts`.
 
 ## Controlled vocabularies
@@ -105,8 +128,8 @@ ignored -- see `notes.md` for why that file is not itself a valid source.
 ## Root-level test coverage
 
 `metadata/lib/validate.test.ts` proves the required validation behavior
-(valid document passes; each controlled vocabulary rejects an invalid
-value; missing required fields fail; `Restricted` without
-`trmRestrictionOwner` fails; duplicate `metadata.name` across documents
-fails; unknown profile fields are rejected; `spec.owner` never leaks into
-`Service.serviceOwner`).
+(valid entry passes; each controlled vocabulary rejects an invalid value;
+missing required fields fail; `Restricted` without `trmRestrictionOwner`
+fails; duplicate `metadata.name` across entries in the catalog fails;
+unknown profile fields are rejected; `spec.owner` never leaks into
+`Service.serviceOwner`; a catalog missing the `services` array fails).

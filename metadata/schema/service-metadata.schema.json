@@ -1,24 +1,37 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://servicelog.internal/schema/service-metadata.schema.json",
-  "title": "ServiceLog Service Metadata",
-  "description": "Canonical machine-readable contract for CSP-owned service metadata YAML documents. Each document describes exactly one cloud service offering, in a Backstage-shaped Resource envelope prepared for future Backstage integration (STORY 2.3) -- these documents are NOT yet valid for direct Backstage Catalog ingestion, since real Backstage Resource entities require spec.owner and this schema intentionally leaves it optional/absent rather than inventing values. The platform (ServiceLog) owns this schema and its controlled vocabularies; CSP teams own the values inside it for the services they maintain.",
+  "title": "ServiceLog Service Catalog",
+  "description": "Canonical machine-readable contract for the CSP-owned service catalog YAML (metadata/services.yaml). The catalog is a single document containing every service entry; each entry describes exactly one cloud service offering in a Backstage-shaped Resource envelope prepared for future Backstage integration (STORY 2.3) -- entries are NOT yet valid for direct Backstage Catalog ingestion, since real Backstage Resource entities require spec.owner and this schema intentionally leaves it optional/absent rather than inventing values. The platform (ServiceLog) owns this schema and its controlled vocabularies; CSP teams own the values inside it for the services they maintain. The per-entry contract (metadata/spec/profile) is unchanged from the prior one-file-per-service packaging -- only the outer envelope aggregates entries into one file.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "required": ["services"],
   "properties": {
-    "apiVersion": {
-      "const": "backstage.io/v1alpha1",
-      "description": "Backstage-shaped envelope version, chosen so these documents won't need a structural rewrite when Story 2.3 adds real Backstage Catalog ingestion. Not itself a claim that the document is valid for ingestion today -- see spec.owner."
-    },
-    "kind": {
-      "const": "Resource",
-      "description": "Backstage entity kind. Every ServiceLog service-offering document is a Resource."
-    },
-    "metadata": { "$ref": "#/$defs/metadata" },
-    "spec": { "$ref": "#/$defs/spec" }
+    "services": {
+      "type": "array",
+      "description": "The complete V1 ServiceLog catalog: one entry per cloud service offering.",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/serviceEntry" }
+    }
   },
   "$defs": {
+    "serviceEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "const": "backstage.io/v1alpha1",
+          "description": "Backstage-shaped envelope version, chosen so these entries won't need a structural rewrite when Story 2.3 adds real Backstage Catalog ingestion. Not itself a claim that the entry is valid for ingestion today -- see spec.owner."
+        },
+        "kind": {
+          "const": "Resource",
+          "description": "Backstage entity kind. Every ServiceLog service-offering entry is a Resource."
+        },
+        "metadata": { "$ref": "#/$defs/metadata" },
+        "spec": { "$ref": "#/$defs/spec" }
+      }
+    },
     "metadata": {
       "type": "object",
       "additionalProperties": false,
@@ -26,7 +39,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "Stable machine-readable identifier for the service. Must be unique across the entire loaded catalog (enforced across documents, not just within one file). Becomes Service.id.",
+          "description": "Stable machine-readable identifier for the service. Must be unique across the entire catalog (enforced across all entries in services[], since JSON Schema alone cannot express array-wide uniqueness on a nested field -- see metadata/lib/validate.ts). Becomes Service.id.",
           "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
           "minLength": 1,
           "maxLength": 128
