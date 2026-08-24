@@ -185,4 +185,47 @@ describe('ServiceDetailDrawer dialog primitive (post-MUI-v4 removal)', () => {
     render(<Harness service={BASE_SERVICE} />);
     expect(screen.getByRole('button', { name: /^Request via ServiceNow$/ }).hasAttribute('aria-disabled')).toBe(false);
   });
+
+  // Dialog's portal container is created and attached inside useLayoutEffect,
+  // never during render -- a render-phase document.body.appendChild would be
+  // an impure side effect that React 18 StrictMode double-invokes (mount ->
+  // cleanup -> mount) specifically to surface, leaking one orphaned portal
+  // node per mount if the cleanup weren't correct. These two tests assert
+  // the actual DOM node count, not just behavior, so a regression here
+  // would fail even if focus/dialog semantics still happened to work.
+  it('StrictMode mount creates exactly one portal container, not two', () => {
+    render(
+      <React.StrictMode>
+        <Harness service={BASE_SERVICE} />
+      </React.StrictMode>,
+    );
+    expect(screen.getByRole('dialog')).toBeTruthy();
+    // While the dialog is open, document.body should hold exactly two
+    // children: testing-library's own render container (correctly
+    // aria-hidden by Dialog as an unrelated sibling) and Dialog's one
+    // portal root. A leaked extra container -- what the original
+    // render-phase `document.body.appendChild` produced under StrictMode's
+    // double-invoked lazy useState initializer -- would push this to 3.
+    expect(document.body.children.length).toBe(2);
+    const portalRoots = Array.from(document.body.children).filter(
+      (child) => child.querySelector('[role="dialog"]') !== null,
+    );
+    expect(portalRoots.length).toBe(1);
+  });
+
+  it('repeated open/close cycles leave no orphaned portal containers behind', () => {
+    render(<Harness service={null} />);
+    const baseline = document.body.children.length;
+    const openButton = screen.getByRole('button', { name: 'Open trigger' });
+
+    for (let cycle = 0; cycle < 5; cycle += 1) {
+      fireEvent.click(openButton);
+      expect(screen.getByRole('dialog')).toBeTruthy();
+      expect(document.body.children.length).toBe(baseline + 1);
+
+      fireEvent.keyDown(document, { key: 'Escape' });
+      expect(screen.queryByRole('dialog')).toBeNull();
+      expect(document.body.children.length).toBe(baseline);
+    }
+  });
 });

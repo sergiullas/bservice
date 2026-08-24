@@ -123,15 +123,104 @@ guessing, then fixed and re-verified with a second live screenshot showing
 the cards correctly populated. `box-sizing: border-box` and
 `svg { display: block }` were added to the same scoped reset for the same
 reason (load-bearing elsewhere in these components, not preflight-covered
-by default). The **no-leakage** side of checkpoint B1 was verified
-separately and just as concretely: client-side-navigating from
-`/servicelog` to an unrelated Backstage page while leaving the plugin's
-injected `<style>` tag in the DOM (it is never torn down on unmount) still
-left that other page's font, box-sizing, button background, and link
-underline as pure Backstage defaults -- because every rule in that
-stylesheet is either genuinely host-neutral (design tokens, the
-`.metadata-label` class) or qualified under `.servicelog-scope`, which
-that other page never contains.
+by default). The **no-leakage** side of checkpoint B1 was verified the
+same way: client-side-navigating from `/servicelog` to an unrelated
+Backstage page while leaving the plugin's injected `<style>` tag in the
+DOM (it is never torn down on unmount) still left that other page's font,
+box-sizing, button background, and link underline as pure Backstage
+defaults -- because the hand-written reset above is entirely qualified
+under `.servicelog-scope`, which that other page never contains.
+
+That verification covered the reset in this file, but not everything the
+build actually shipped: Tailwind compiles this file's own rules exactly as
+written, with no idea `.servicelog-scope` means anything special, so
+everything *it* generates -- every utility selector from `utilities.css`,
+and the `:root, :host` theme-variable block from `theme.css` -- came out
+unscoped, as did `@servicelog/core/styles/tokens.css`'s own `:root`/`.dark`
+blocks (correctly unscoped *as authored*, since that file is deliberately
+host-neutral input any host can load as-is -- see its header -- the plugin
+is what needs to scope it on the way out). A page elsewhere in Backstage
+with an element carrying a generically-named class like `flex` or `hidden`
+would have collided with ServiceLog's utility output, and the whole host
+page's `:root` carried ServiceLog's `--background`/`--foreground`/etc, for
+as long as the plugin's stylesheet stayed injected. Real gap, not a
+hypothetical one, in the same spirit as the button-background bug above --
+it just hadn't been exercised yet.
+
+### Completing containment: scoping what Tailwind itself generates
+
+Fixed by post-processing Tailwind's compiled output rather than hand-authoring
+a scoped duplicate of it: `plugins/servicelog/scripts/build-css.mjs` now runs
+the compiled CSS through `postcss-prefix-selector` after the Tailwind CLI
+step, rewriting every selector to require `.servicelog-scope` --
+
+- The ordinary case: prefixed as an ancestor (`.flex` -> `.servicelog-scope
+  .flex`), which composes correctly with whatever combinator already follows
+  (child, sibling, pseudo-element, `:is()`/`:where()` compounds -- Tailwind's
+  variant and Radix-`data-*` output all take this path unmodified).
+- `:root`/`:host` -> rewritten to `.servicelog-scope` itself, not a
+  descendant of it: custom properties only cascade to descendants when
+  declared on an ancestor (or the element itself), and no element can be a
+  descendant of `:root`, so anything else would silently fail to inherit.
+  This is what makes both Tailwind's own surviving theme variables and
+  `tokens.css`'s design tokens resolve correctly for scoped content while
+  no longer existing on the host's real `:root`.
+- `.dark` -> rewritten to `.servicelog-scope.dark` (compound, not
+  descendant) so it activates by being toggled on the same element that
+  carries the scope class -- consistent with the `&:is(.dark *)`
+  descendant-strategy custom variant `tokens.css` registers for `dark:`
+  utilities. Nothing in the product currently toggles `.dark`; it is kept
+  correctly scoped rather than dropped, since it's pre-existing (if
+  inert) infrastructure.
+- Selectors already written against `.servicelog-scope` by hand (the reset
+  above) are left untouched instead of double-prefixed.
+
+`@property` and `@keyframes` at-rules are untouched by this pass (selector
+prefixing only walks style rules, not at-rules) and stay global -- the
+compiled output currently has 68 `@property` registrations (Tailwind's
+interpolatable custom-property declarations, e.g. `--tw-gradient-from`) and
+6 `@keyframes` (`pulse`, `enter`, `exit`, `accordion-down`, `accordion-up`,
+`caret-blink`), some with fairly generic names. This is accepted as an
+inherent CSS-platform limitation rather than a gap: neither at-rule type
+can be scoped to a selector at all (a `@property` registration is global by
+name, and `animation-name` looks up `@keyframes` by name with no scoping
+mechanism), the risk is a same-name collision with another plugin
+overriding timing/interpolation rather than a structural breakage, and
+building custom keyframe-renaming infrastructure for it was judged
+out of proportion to that risk.
+
+Verified live against the running harness (`backstage-cli package start`,
+guest sign-in, `/servicelog`), with both a positive and a negative control
+rather than eyeballing the page alone:
+
+- **Positive control**: a real ServiceLog element's `flex` utility class
+  still computes `display: flex` inside `.servicelog-scope` -- the scoping
+  pass didn't break ServiceLog's own use of Tailwind.
+- **Negative control**: a synthetic `<div class="flex hidden">` appended
+  directly to `document.body` (a sibling of the app root, deliberately
+  outside `.servicelog-scope` -- the exact shape of collision described
+  above) computes plain `display: block`, proving neither utility rule
+  matches it. `getComputedStyle(document.documentElement)` shows empty
+  `--background`/`--foreground` throughout, even while on `/servicelog`
+  with the stylesheet active.
+- **Hardest case**: client-side-navigating away from `/servicelog` (style
+  tag still mounted, never torn down, zero `.servicelog-scope` elements
+  left anywhere in the document) reproduces the same negative-control
+  result -- marker still `display: block`, `:root` still carries neither
+  token -- plus the original font/box-sizing/button-background/link
+  checks, all still pure Backstage defaults.
+- **Portal content**: `Dialog`'s portal container (see
+  `src/app/components/primitives/Dialog.tsx`) is created with the same
+  `SERVICELOG_SCOPE_CLASS_NAME` used everywhere else -- confirmed live as
+  a direct `document.body` child carrying that class, with content
+  rendered into it (e.g. the drawer's close button) correctly resolving
+  the scoped button-background reset. Portaled content is not a special
+  case; it participates in the same scope because it's given the same
+  class, the same way any other element would be.
+
+Screenshots of the open drawer and a filtered grid, taken during this
+verification, are visually identical to the pre-fix baseline -- this was a
+containment fix, not a redesign.
 
 ## 5. Package manager / workspace convention
 

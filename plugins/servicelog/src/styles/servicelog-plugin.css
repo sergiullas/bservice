@@ -18,10 +18,27 @@
  * 2. The base-layer reset those preflight-adjacent rules replace is
  *    re-declared here scoped under `.servicelog-scope` instead of bare
  *    `*`/`body`/`html`/element selectors -- ServiceLogPage wraps
- *    `ServiceLogFeature` in that class. Everything else (design tokens,
- *    the `.metadata-label` component class) is genuinely host-neutral and
- *    is imported unscoped from @servicelog/core, same as the standalone
- *    host's src/styles/theme.css does.
+ *    `ServiceLogFeature` in that class (and Dialog's portal container
+ *    carries the same class, so portaled content participates in the
+ *    scope too -- see @servicelog/core's components/primitives/Dialog.tsx).
+ *
+ * That covers what's hand-written in this file, but not what Tailwind
+ * itself generates from it: every utility selector from `utilities.css`
+ * and the `:root, :host` theme-variable block from `theme.css` come out of
+ * the compiler unscoped, and @servicelog/core/styles/tokens.css's own
+ * `:root`/`.dark` blocks are unscoped too (deliberately -- see that file's
+ * header, it's genuinely host-neutral *input*, meant to be loaded as-is by
+ * hosts that have no reason to scope it, like the standalone app). Rather
+ * than hand-author a scoped duplicate of everything Tailwind generates,
+ * ../scripts/build-css.mjs post-processes the compiled output with
+ * postcss-prefix-selector after this file is compiled, rewriting every
+ * selector to require `.servicelog-scope` -- as an ancestor for ordinary
+ * selectors, or, for `:root`/`:host`/`.dark`, as the scope element itself
+ * (custom properties cascade to descendants only when declared on an
+ * ancestor/self, never via a "descendant of :root" selector, which can't
+ * match anything). See that script for the exact transform and the
+ * `@property`/`@keyframes` exception it can't do anything about, and
+ * docs/backstage-compatibility.md section 4b for the verified result.
  */
 /* CSS layer precedence is set by the order layer *names* are first seen,
    not where their content physically appears -- and a bare `@layer

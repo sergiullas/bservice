@@ -14,3 +14,4 @@ export type {
   Service,
   TrmStatus,
 } from './data/types';
+export { SERVICELOG_SCOPE_CLASS_NAME } from './styles/scopeClassName';

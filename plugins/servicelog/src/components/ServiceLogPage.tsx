@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useApi } from '@backstage/core-plugin-api';
 import { Progress, ResponseErrorPanel } from '@backstage/core-components';
-import { ServiceLogFeature, type Service } from '@servicelog/core';
+import { SERVICELOG_SCOPE_CLASS_NAME, ServiceLogFeature, type Service } from '@servicelog/core';
 import { servicelogApiRef } from '../api';
 import { useInjectServicelogStyles } from '../styles/useInjectPluginStyles';
 
@@ -45,7 +45,7 @@ export function ServiceLogPage() {
   if (state.error) return <ResponseErrorPanel error={state.error} />;
 
   return (
-    <div className="servicelog-scope">
+    <div className={SERVICELOG_SCOPE_CLASS_NAME}>
       <ServiceLogFeature services={state.services} />
     </div>
   );

@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { SERVICELOG_SCOPE_CLASS_NAME } from '../../styles/scopeClassName';
 
 interface DialogProps {
   onClose: () => void;
@@ -15,38 +16,48 @@ interface DialogProps {
  * already implements those itself (the MUI Modal was rendered with
  * disableAutoFocus/disableRestoreFocus/disableEnforceFocus for exactly this
  * reason, see its comments), and that logic is unchanged by this primitive.
+ *
+ * The portal container starts out `null` and is only created/attached
+ * inside `useLayoutEffect`, never during render: creating real DOM nodes
+ * and appending them to `document.body` as a side effect of rendering
+ * would be impure (React 18 StrictMode double-invokes render, including
+ * lazy `useState` initializers, specifically to surface exactly this kind
+ * of bug, which would otherwise leak one orphaned container per mount).
+ * `useLayoutEffect` still keeps this synchronous and flash-free: it runs
+ * before the browser paints, and the state update it makes to publish the
+ * container is flushed synchronously too, so the container exists and is
+ * already attached by the time this component's children (rendered via
+ * the portal on the next pass) mount and their own ref callbacks --
+ * ServiceDetailDrawer's closeButtonRef calls `node.focus()` the moment it
+ * mounts -- run. No user-visible extra frame results.
  */
 export function Dialog({ onClose, children }: DialogProps) {
-  // Created *and* attached synchronously during render (not in an effect):
-  // children's ref callbacks -- ServiceDetailDrawer's closeButtonRef calls
-  // `node.focus()` the moment it mounts -- run in React's layout phase,
-  // which fires before this component's own effects. A detached container
-  // would make that focus() call a no-op, since a node not yet connected to
-  // `document` cannot be focused.
-  const [container] = useState(() => {
-    const el = document.createElement('div');
-    document.body.appendChild(el);
-    return el;
-  });
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const el = document.createElement('div');
+    el.className = SERVICELOG_SCOPE_CLASS_NAME;
+    document.body.appendChild(el);
+
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    const siblings = Array.from(document.body.children).filter((el) => el !== container);
-    const previousAriaHidden = siblings.map((el) => el.getAttribute('aria-hidden'));
-    siblings.forEach((el) => el.setAttribute('aria-hidden', 'true'));
+    const siblings = Array.from(document.body.children).filter((sibling) => sibling !== el);
+    const previousAriaHidden = siblings.map((sibling) => sibling.getAttribute('aria-hidden'));
+    siblings.forEach((sibling) => sibling.setAttribute('aria-hidden', 'true'));
+
+    setContainer(el);
 
     return () => {
       document.body.style.overflow = previousOverflow;
-      siblings.forEach((el, index) => {
+      siblings.forEach((sibling, index) => {
         const previous = previousAriaHidden[index];
-        if (previous === null) el.removeAttribute('aria-hidden');
-        else el.setAttribute('aria-hidden', previous);
+        if (previous === null) sibling.removeAttribute('aria-hidden');
+        else sibling.setAttribute('aria-hidden', previous);
       });
-      document.body.removeChild(container);
+      document.body.removeChild(el);
     };
-  }, [container]);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -56,5 +67,6 @@ export function Dialog({ onClose, children }: DialogProps) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
+  if (!container) return null;
   return createPortal(children, container);
 }
