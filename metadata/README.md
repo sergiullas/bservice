@@ -20,6 +20,14 @@ metadata/
 └── google-cloud/                       # one YAML document per Google Cloud service
 ```
 
+`metadata/` is also an npm workspace package (`@servicelog/metadata`,
+STORY 2.3). The standalone host and `scripts/validate-metadata.ts` still
+use `metadata/lib/validate.ts` directly, unaffected; the Backstage backend
+data adapter (`plugins/servicelog-backend`) depends on it as a real
+package so it can locate this directory reliably regardless of where its
+own bundled code ends up running from -- see
+`docs/backstage-compatibility.md` section 10.
+
 Each service is a single YAML file in a Backstage-shaped `Resource`
 envelope -- prepared for Backstage integration in a future story, but **not**
 yet valid for direct ingestion by a real Backstage Catalog: Backstage's own

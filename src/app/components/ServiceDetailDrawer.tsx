@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Modal from '@material-ui/core/Modal';
-import Tooltip from '@material-ui/core/Tooltip';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { AlertTriangle, ArrowUpRight, ChevronDown, ChevronUp, ExternalLink, X } from 'lucide-react';
 import { FedRampStatus, ProvisioningModel, Service } from '../data/types';
 import { AwsLogo, AzureLogo, GoogleCloudLogo } from './ProviderLogo';
 import { TRM_STYLES } from './ServiceCard';
+import { Dialog } from './primitives/Dialog';
+import { useStableId } from './primitives/useStableId';
 
 // Prototype links carry real intended destinations in the data model, but
 // stakeholders do not want the prototype UI to navigate anywhere real yet.
@@ -24,22 +25,60 @@ function ProviderIcon({ provider }: { provider: string }) { if (provider === 'AW
 function StatusValue({ value, className }: { value: string; className: string }) { return <span className={`inline-flex w-fit rounded-full px-2.5 py-1 text-[12px] font-bold ${className}`}>{value}</span>; }
 function DetailField({ label, children }: { label: string; children: React.ReactNode }) { return <div className="min-w-0"><dt className="metadata-label">{label}</dt><dd className="mt-1.5 text-[14px] font-normal leading-5 text-slate-800">{children}</dd></div>; }
 
-// MUI v4's default tooltip text is 10px, which stakeholders flagged as too
-// small to read comfortably. Sized explicitly here rather than in a global
+// Sized explicitly at 14px (stakeholders flagged MUI v4's 10px default
+// tooltip text as too small to read comfortably) rather than in a global
 // override so only this tooltip changes.
-const TOOLTIP_TEXT_STYLE: React.CSSProperties = { display: 'inline-block', fontSize: 14, lineHeight: '20px' };
+const TOOLTIP_TEXT_STYLE: React.CSSProperties = { fontSize: 14, lineHeight: '20px' };
 
 function DisabledServiceNowCta({ reason }: { reason: string }) {
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const triggerRef = useRef<HTMLSpanElement>(null);
+  const [position, setPosition] = useState<{ top: number; left: number } | null>(null);
+  const tooltipId = useStableId('servicenow-cta-tooltip');
+
+  useLayoutEffect(() => {
+    if (!tooltipOpen || !triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    setPosition({ top: rect.top, left: rect.left + rect.width / 2 });
+  }, [tooltipOpen]);
+
   return (
-    <Tooltip arrow title={<span style={TOOLTIP_TEXT_STYLE}>{reason}</span>}>
-      {/* A native disabled button can't receive focus or hover, so the
-          Tooltip needs a focusable, hoverable wrapper. That wrapper carries
-          the full accessible name/state; the inner text is hidden from AT
-          so it isn't announced twice. */}
-      <span role="button" aria-disabled="true" tabIndex={0} aria-label={`Request via ServiceNow. ${reason}`} className="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-lg bg-slate-300 px-4 py-3 text-[14px] font-semibold text-slate-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1565C0]">
+    <span className="relative block w-full">
+      {/* A native disabled button can't receive focus or hover, so this is a
+          focusable, hoverable wrapper instead. It carries the full accessible
+          name/state; the inner text is hidden from AT so it isn't announced
+          twice. Mouse hover and keyboard focus both reveal the same
+          `role="tooltip"` explanation (WAI-ARIA tooltip pattern); Escape
+          dismisses it. */}
+      <span
+        ref={triggerRef}
+        role="button"
+        aria-disabled="true"
+        tabIndex={0}
+        aria-label={`Request via ServiceNow. ${reason}`}
+        aria-describedby={tooltipOpen ? tooltipId : undefined}
+        onMouseEnter={() => setTooltipOpen(true)}
+        onMouseLeave={() => setTooltipOpen(false)}
+        onFocus={() => setTooltipOpen(true)}
+        onBlur={() => setTooltipOpen(false)}
+        onKeyDown={(event) => { if (event.key === 'Escape') setTooltipOpen(false); }}
+        className="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-lg bg-slate-300 px-4 py-3 text-[14px] font-semibold text-slate-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1565C0]"
+      >
         <span aria-hidden="true" className="flex items-center gap-2">Request via ServiceNow <ArrowUpRight className="size-4" /></span>
       </span>
-    </Tooltip>
+      {tooltipOpen && position && createPortal(
+        <span
+          role="tooltip"
+          id={tooltipId}
+          style={{ position: 'fixed', top: position.top - 10, left: position.left, transform: 'translate(-50%, -100%)', ...TOOLTIP_TEXT_STYLE }}
+          className="pointer-events-none z-50 max-w-xs rounded-md bg-slate-900 px-3 py-2 text-center text-white shadow-lg"
+        >
+          {reason}
+          <span aria-hidden="true" className="absolute -bottom-1 left-1/2 size-2 -translate-x-1/2 rotate-45 bg-slate-900" />
+        </span>,
+        document.body,
+      )}
+    </span>
   );
 }
 
@@ -49,17 +88,15 @@ export function ServiceDetailDrawer({ service, onClose, triggerRef, fallbackFocu
   const [expandedDescriptionId, setExpandedDescriptionId] = useState<string | null>(null);
   const [overflowingDescriptionId, setOverflowingDescriptionId] = useState<string | null>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
-  const dialogRef = useRef<HTMLElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const descriptionExpanded = service !== null && expandedDescriptionId === service.id;
 
-  // MUI v4's Modal focus-containment (Unstable_TrapFocus, literally named
-  // "unstable") has a known quirk: tabbing past the last focusable element
-  // doesn't cycle straight back to the first one -- it briefly lands on the
-  // modal's own unlabeled wrapper node before the *next* Tab press redirects
-  // it. That's a confusing stop for keyboard/AT users, so containment is
-  // disabled on Modal (disableEnforceFocus) and implemented directly here
-  // instead: Tab from the last focusable element wraps to the first, and
-  // Shift+Tab from the first wraps to the last.
+  // Focus containment is implemented directly here rather than relying on a
+  // portal library's own trap (the @material-ui/core v4 Modal this replaced
+  // had a known quirk where tabbing past the last focusable element briefly
+  // landed on the modal's own unlabeled wrapper node instead of cycling
+  // straight back to the first): Tab from the last focusable element wraps
+  // to the first, and Shift+Tab from the first wraps to the last.
   const handleDialogKeyDown = (event: React.KeyboardEvent) => {
     if (event.key !== 'Tab' || !dialogRef.current) return;
     const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
@@ -81,9 +118,9 @@ export function ServiceDetailDrawer({ service, onClose, triggerRef, fallbackFocu
   // fires exactly when it mounts (dialog opened -> focus it) and when it
   // unmounts (dialog closed -> return focus to the trigger, or a fallback if
   // that card no longer exists, e.g. filtered out while the panel was open).
-  // A plain useEffect keyed on service?.id is not reliable here: MUI's Modal
-  // portal can take an extra render pass to actually mount its children, so
-  // the ref can still be null on the effect's first (and only) run.
+  // A plain useEffect keyed on service?.id is not reliable here: the portal
+  // can take an extra render pass to actually mount its children, so the
+  // ref can still be null on the effect's first (and only) run.
   const closeButtonRef = useCallback((node: HTMLButtonElement | null) => {
     if (node) {
       node.focus();
@@ -116,7 +153,7 @@ export function ServiceDetailDrawer({ service, onClose, triggerRef, fallbackFocu
   const showDescriptionToggle = descriptionExpanded || descriptionOverflows;
   const hasOnboardingRequirements = !!service.serviceOnboardingRequirements?.length;
   const isNonRequestable = service.trmStatus === 'Prohibited' || service.trmStatus === 'Divest';
-  return <Modal open hideBackdrop disableAutoFocus disableRestoreFocus disableEnforceFocus onClose={onClose}>
+  return <Dialog onClose={onClose}>
     <div className="fixed inset-0 z-50 flex justify-end bg-slate-950/30" onMouseDown={(event) => { event.preventDefault(); onClose(); }}>
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={headingId} onMouseDown={(event) => event.stopPropagation()} onKeyDown={handleDialogKeyDown} className="flex h-full w-full max-w-[600px] flex-col bg-[#FAFBFC] shadow-[-16px_0_40px_rgba(15,23,42,0.20)]">
         <header className="sticky top-0 z-10 border-b border-slate-200 bg-white px-5 py-5 sm:px-6">
@@ -157,5 +194,5 @@ export function ServiceDetailDrawer({ service, onClose, triggerRef, fallbackFocu
         </footer>
       </div>
     </div>
-  </Modal>;
+  </Dialog>;
 }

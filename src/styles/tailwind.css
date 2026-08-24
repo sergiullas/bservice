@@ -1,3 +1,16 @@
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
+
+/* Tailwind's automatic content detection walks the whole project tree.
+   The Backstage harness (STORY 2.3) lives alongside this app in the same
+   repo, and its plugin package embeds its own compiled CSS as a giant TS
+   string (plugins/servicelog/src/styles/generated/servicelog-css.ts,
+   gitignored but still a real file on disk once built) -- without this
+   exclusion, Tailwind can pick up stray class-name-shaped substrings from
+   inside that generated text and add a couple of unused utilities to this
+   build's output. Harmless either way (nothing removes or changes an
+   existing rule), but excluded explicitly for a clean, minimal build. */
+@source not "../../plugins";
+@source not "../../packages";
+@source not "../../dist-types";

@@ -1,0 +1,24 @@
+{
+  "name": "@servicelog/core",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Host-neutral ServiceLog product UI (STORY 2.1) -- rendered by the standalone demo shell via relative import, and by the Backstage plugin via this package. One implementation, two hosts.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "dependencies": {
+    "lucide-react": "0.487.0"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@servicelog/metadata",
+  "version": "0.0.1",
+  "private": true,
+  "description": "CSP-owned service metadata YAML, its JSON Schema contract, and the shared validate/normalize library (STORY 2.2). Consumed directly (relative import) by the root standalone app's scripts/tests, and as a workspace package by the Backstage backend data adapter (STORY 2.3) so the metadata directory can be located reliably regardless of that package's build output layout.",
+  "type": "module",
+  "main": "./dist/lib/validate.js",
+  "types": "./dist/lib/validate.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@servicelog/core": "0.0.1",
+    "@types/js-yaml": "^4.0.9",
+    "typescript": "^7.0.2"
+  }
+}

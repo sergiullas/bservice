@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700;800;900&family=Merriweather:ital,wght@0,400;0,700&display=swap');
+@import '../app/styles/fonts.css';
 
 body, * {
   font-family: 'Lato', sans-serif;
