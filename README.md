@@ -190,7 +190,8 @@ Service[]
 ServiceLog UI
 ```
 
-The V1 catalog currently contains **76 services**:
+The V1 catalog currently contains **76 services**, aggregated in one
+YAML catalog file, `metadata/services.yaml` (see Phase 5.1 below):
 
 - **51 AWS**
 - **13 Azure**
@@ -211,6 +212,33 @@ trmStatus: Dangerous
 is invalid. ServiceLog does not silently accept it, reinterpret it, or map it to another status.
 
 The build validates metadata before producing the application, so invalid catalog data fails loudly instead of becoming a runtime surprise.
+
+## Phase 5.1: One aggregate YAML catalog
+
+The carbon team's prototype workflow expects one YAML catalog rather than
+one file per service, so the packaging (not the metadata model) changed
+again: all 76 services now live in a single file, `metadata/services.yaml`,
+as a `services` array. The per-service YAML layout (`metadata/aws/`,
+`metadata/azure/`, `metadata/google-cloud/`) was retired.
+
+Nothing above the `Service[]` boundary changed:
+
+```text
+metadata/services.yaml (76 entries)
+      ↓
+shared JSON Schema validation (same per-entry contract, reused via $defs)
+      ↓
+normalization
+      ↓
+Service[]
+      ↓
+ServiceLog UI
+```
+
+The service-entry contract, controlled vocabularies, and
+`npm run validate:metadata` entry point are unchanged. This is a packaging
+correction for a specific prototype integration handoff, not a permanent
+enterprise metadata governance model.
 
 ## Phase 6: Backstage integration
 
@@ -415,9 +443,7 @@ metadata/
 │   └── service-metadata.schema.json
 ├── lib/
 │   └── validate.ts
-├── aws/
-├── azure/
-└── google-cloud/
+└── services.yaml
 
 src/
 ├── app/
@@ -501,7 +527,7 @@ This starts the standalone stakeholder experience with the ServiceLog demo Sideb
 npm run validate:metadata
 ```
 
-This validates the full CSP catalog against the shared schema and checks cross-document rules such as unique service IDs.
+This validates `metadata/services.yaml` against the shared schema and checks the one rule the schema alone can't express: unique service IDs across the whole catalog.
 
 ## Run tests
 
@@ -632,6 +658,7 @@ The evolution of the project is recorded in the story files:
 - [`STORY_1.2_accessibility-main-view-and-service-detail-panel.md`](./dev/stories/STORY_1.2_accessibility-main-view-and-service-detail-panel.md)
 - [`STORY_2.1_host-neutral-servicelog-and-standalone-demo-shell.md`](./dev/stories/STORY_2.1_host-neutral-servicelog-and-standalone-demo-shell.md)
 - [`STORY_2.2_yaml-metadata-contract-validation-and-data-pipeline.md`](./dev/stories/STORY_2.2_yaml-metadata-contract-validation-and-data-pipeline.md)
+- [`STORY_2.2.1_aggregate-services-into-single-yaml-catalog.md`](./dev/stories/STORY_2.2.1_aggregate-services-into-single-yaml-catalog.md)
 - [`STORY_2.3_backstage-plugin-integration-and-dual-host-runtime.md`](./dev/stories/STORY_2.3_backstage-plugin-integration-and-dual-host-runtime.md)
 
 These files are not historical clutter. Together they explain why the product behaves the way it does and which decisions are intentional.

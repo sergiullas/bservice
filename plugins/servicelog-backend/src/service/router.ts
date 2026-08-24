@@ -1,6 +1,6 @@
 import { createRequire } from 'node:module';
-import { dirname, join, relative } from 'node:path';
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { readFileSync } from 'node:fs';
 import express from 'express';
 import Router from 'express-promise-router';
 import * as yaml from 'js-yaml';
@@ -10,7 +10,7 @@ import type {
   LoggerService,
   RootConfigService,
 } from '@backstage/backend-plugin-api';
-import { loadCatalog, type CatalogDocument } from '@servicelog/metadata';
+import { loadCatalog } from '@servicelog/metadata';
 
 export interface RouterOptions {
   logger: LoggerService;
@@ -18,19 +18,19 @@ export interface RouterOptions {
   config: RootConfigService;
 }
 
-const CSP_DIRS = ['aws', 'azure', 'google-cloud'];
+const CATALOG_FILE = 'services.yaml';
 
 /**
- * Locates the Story 2.2 CSP YAML directory. `servicelog.metadataRoot` in
- * app-config wins if set (what a real deployment would use, since it won't
- * necessarily check out this monorepo layout -- see
- * docs/backstage-compatibility.md #10). Otherwise this resolves
- * `@servicelog/metadata`'s real on-disk location via Node's own module
- * resolution rather than a `__dirname`-relative path: this package gets
- * bundled by `@backstage/cli package build` into a single output file, so
- * `__dirname` at runtime does not reliably preserve this source file's
- * depth relative to the metadata directory the way a plain relative import
- * would assume.
+ * Locates the Story 2.2/2.2.1 metadata directory containing
+ * `services.yaml`. `servicelog.metadataRoot` in app-config wins if set
+ * (what a real deployment would use, since it won't necessarily check out
+ * this monorepo layout -- see docs/backstage-compatibility.md #10).
+ * Otherwise this resolves `@servicelog/metadata`'s real on-disk location
+ * via Node's own module resolution rather than a `__dirname`-relative
+ * path: this package gets bundled by `@backstage/cli package build` into a
+ * single output file, so `__dirname` at runtime does not reliably preserve
+ * this source file's depth relative to the metadata directory the way a
+ * plain relative import would assume.
  */
 function resolveMetadataRoot(config: RootConfigService): string {
   const configured = config.getOptionalString('servicelog.metadataRoot');
@@ -41,42 +41,12 @@ function resolveMetadataRoot(config: RootConfigService): string {
   return dirname(packageJsonPath);
 }
 
-function findYamlFiles(dir: string): string[] {
-  const files: string[] = [];
-  for (const entry of readdirSync(dir)) {
-    const full = join(dir, entry);
-    if (statSync(full).isDirectory()) files.push(...findYamlFiles(full));
-    else if (entry.endsWith('.yaml') || entry.endsWith('.yml')) files.push(full);
-  }
-  return files;
-}
-
-function loadDocuments(metadataRoot: string): { documents: CatalogDocument[]; parseErrors: string[] } {
-  const documents: CatalogDocument[] = [];
-  const parseErrors: string[] = [];
-
-  for (const cspDir of CSP_DIRS) {
-    const absoluteDir = join(metadataRoot, cspDir);
-    for (const absolutePath of findYamlFiles(absoluteDir)) {
-      const file = relative(metadataRoot, absolutePath);
-      const raw = readFileSync(absolutePath, 'utf8');
-      try {
-        documents.push({ file, doc: yaml.load(raw) });
-      } catch (error) {
-        parseErrors.push(`${file}: not valid YAML: ${error instanceof Error ? error.message : String(error)}`);
-      }
-    }
-  }
-
-  return { documents, parseErrors };
-}
-
 /**
  * The Backstage-specific half of the data seam described in STORY 2.3
  * checkpoint D: everything above this line is Backstage plumbing
- * (auth, config, HTTP). `loadCatalog` below is the exact same Story 2.2
- * validator the standalone host's YAML adapter calls -- reused, not
- * reimplemented, so both hosts enforce one contract.
+ * (auth, config, HTTP). `loadCatalog` below is the exact same Story
+ * 2.2/2.2.1 validator the standalone host's YAML adapter calls -- reused,
+ * not reimplemented, so both hosts enforce one contract.
  */
 export async function createRouter({ logger, httpAuth, config }: RouterOptions): Promise<express.Router> {
   const router = Router();
@@ -89,13 +59,18 @@ export async function createRouter({ logger, httpAuth, config }: RouterOptions):
     // 2.3 checkpoint D and docs/backstage-compatibility.md #9.
     await httpAuth.credentials(req, { allow: ['user', 'service'] });
 
-    const { documents, parseErrors } = loadDocuments(metadataRoot);
-    if (parseErrors.length > 0) {
-      logger.error(`ServiceLog metadata failed to parse: ${parseErrors.join(' | ')}`);
-      throw new InputError(`ServiceLog metadata failed to parse as YAML:\n${parseErrors.join('\n')}`);
+    const catalogPath = join(metadataRoot, CATALOG_FILE);
+    const raw = readFileSync(catalogPath, 'utf8');
+    let doc: unknown;
+    try {
+      doc = yaml.load(raw);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      logger.error(`ServiceLog metadata failed to parse: ${message}`);
+      throw new InputError(`ServiceLog metadata failed to parse as YAML:\n${CATALOG_FILE}: ${message}`);
     }
 
-    const { services, errors } = loadCatalog(documents);
+    const { services, errors } = loadCatalog(doc, CATALOG_FILE);
     if (errors.length > 0) {
       const details = errors
         .map((error) => `${error.file} ${error.path}: ${error.message}${error.expected ? ` (expected: ${error.expected})` : ''}`)
@@ -106,7 +81,7 @@ export async function createRouter({ logger, httpAuth, config }: RouterOptions):
       throw new InputError(`ServiceLog metadata failed validation (${errors.length} issue(s)):\n${details}`);
     }
 
-    logger.info(`ServiceLog: served ${services.length} service(s) from ${documents.length} document(s)`);
+    logger.info(`ServiceLog: served ${services.length} service(s) from ${CATALOG_FILE}`);
     res.json({ services });
   });
 

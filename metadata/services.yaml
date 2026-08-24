@@ -1,0 +1,2753 @@
+services:
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-athena
+      title: Amazon Athena
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Analytics
+        serviceDescription: >-
+          Amazon Athena is an interactive query service that makes it easy to analyze data in Amazon
+          S3 using standard SQL. Athena is serverless, so there is no infrastructure to manage, and
+          you pay only for the queries that you run.
+        serviceExternalDoc: https://docs.aws.amazon.com/athena/
+        serviceInternalDoc: ./platforms/development/amazon/athena
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-athena
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Ad hoc SQL analysis over S3 data
+          - Serverless querying for data lake workloads
+          - Log and clickstream analysis
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-aurora-serverless
+      title: Amazon Aurora Serverless
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          Amazon Aurora Serverless is an on demand, autoscaling configuration for Amazon Aurora, a
+          relational database service compatible with MySQL and PostgreSQL. It automatically adjusts
+          database capacity based on workload requirements, eliminating the need for manual
+          provisioning and management of database servers.
+        serviceExternalDoc: https://aws.amazon.com/rds/aurora/serverless/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/platforms/development/amazon/rds.html#aurora-serverless
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-aurora-serverless
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Variable and intermittent workload databases
+          - Dev and test database capacity
+          - Auto-scaling relational workloads
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-bedrock
+      title: Amazon Bedrock
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: AI & Machine Learning
+        serviceDescription: >-
+          Amazon Bedrock is a fully managed service from Amazon Web Services (AWS) that provides
+          access to a variety of powerful foundation models (FMs) from leading AI companies,
+          including Anthropic, Meta, and Cohere, as well as Amazon's own Titan family of models. It
+          is designed to simplify the development of generative AI applications without the need to
+          manage infrastructure.
+        serviceExternalDoc: https://docs.aws.amazon.com/bedrock/
+        serviceInternalDoc: ./platforms/development/amazon/bedrock
+        provisioningModel: Tier 3
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        serviceLimitations: Not approved for PII or PHI workloads.
+        fedRampStatus: FedRAMP Ready
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM AI Platform Team
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-bedrock
+        fundingApproach: Funding recouped
+        approvalWorkflow: Multi-Level Approval
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Content generation and summarization
+          - Document analysis and extraction
+          - Code generation assistance
+          - Conversational AI prototyping
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - TRM Link to the requested Large Language Model (LLM)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-connect
+      title: Amazon Connect
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Customer Engagement
+        serviceDescription: >-
+          A self-service, cloud-based contact center service that scales to support any size
+          business.
+        serviceExternalDoc: https://docs.aws.amazon.com/connect/
+        serviceInternalDoc: ./governance/request-access#amazon-connect
+        provisioningModel: Tier 3
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP In Process
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM Application Platform Team
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-connect
+        fundingApproach: Funding recouped
+        approvalWorkflow: Security Review
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Cloud-based contact center
+          - Customer support call routing
+          - Interactive voice response (IVR) flows
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-documentdb
+      title: Amazon DocumentDB
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          Amazon DocumentDB (with MongoDB compatibility) is a database service that is purpose-built
+          for JSON data management at scale, fully managed and integrated with AWS, and
+          enterprise-ready with high durability. Amazon DocumentDB is designed to give you the
+          scalability and durability you need when operating mission-critical MongoDB workloads.
+          Storage scales automatically up to 64TiB without any impact to your application. It
+          supports millions of requests per second with up to 15 low latency read replicas in
+          minutes, without any application downtime, regardless of the size of your data.
+        serviceExternalDoc: https://docs.aws.amazon.com/documentdb/
+        serviceInternalDoc: ./platforms/development/amazon/docudb
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-documentdb
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - JSON document workloads
+          - MongoDB-compatible application backends
+          - Content management data stores
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - version
+          - instance_types
+          - Instance_count
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-dynamodb
+      title: Amazon DynamoDB
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          Amazon DynamoDB is a fully managed proprietary NoSQL database service that is offered by
+          Amazon.com as part of the Amazon Web Services portfolio. DynamoDB exposes a similar data
+          model and derives its name from Dynamo, but has a different underlying implementation.
+          Dynamo had a multi-master design requiring the client to resolve version conflicts, and
+          DynamoDB uses synchronous replication across multiple datacenters for high durability and
+          availability.
+        serviceExternalDoc: https://docs.aws.amazon.com/dynamodb/
+        serviceInternalDoc: ./platforms/development/amazon/dynamodb
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-dynamodb
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Session state management
+          - Real-time leaderboards
+          - IoT device telemetry
+          - High-throughput key-value lookups
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - table_name (Optional)
+          - read_capacity
+          - write_capacity
+          - hash_key
+          - range_key (Optional)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-ec2
+      title: Amazon EC2
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Compute
+        serviceDescription: >-
+          Amazon EC2 forms a central part of the AWS cloud-computing platform, Amazon Web Services
+          (AWS), by allowing users to rent virtual computers on which to run their own computer
+          applications. EC2 encourages scalable deployment of applications by providing a web
+          service through which a user can boot an Amazon Machine Image (AMI) to configure a virtual
+          machine, which Amazon calls an "instance", containing any software desired. A user can
+          create, launch, and terminate server-instances as needed, paying by the hour for active
+          servers – hence the term "elastic". EC2 provides users with control over the geographical
+          location of instances that allows for latency optimization and high levels of redundancy.
+        serviceExternalDoc: https://docs.aws.amazon.com/ec2/
+        serviceInternalDoc: ./platforms/iaas/ec2
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-ec2
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Web application hosting
+          - Batch processing workloads
+          - Development and test environments
+          - High-performance computing
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+          - quantity
+          - operating-system (linux or windows)
+          - instance-type
+          - storage-size
+          - tier-structure (for linux)
+          - subnet-id
+          - security-group-ids
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-eks
+      title: Amazon EKS
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Container Platform
+        serviceDescription: >-
+          Amazon EKS (Elastic Kubernetes Service) is a fully managed service that allows you to run
+          Kubernetes on AWS without needing to install, operate, or maintain your own Kubernetes
+          control plane. Because it is certified Kubernetes-conformant, any application running on
+          standard upstream Kubernetes can easily migrate to Amazon EKS without any code changes.
+        serviceExternalDoc: https://docs.aws.amazon.com/eks/
+        serviceInternalDoc: ./platforms/cicd/eks/index
+        provisioningModel: Tier 3
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM Container Platform Team
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-eks
+        fundingApproach: Funding recouped
+        approvalWorkflow: Architecture Review
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Containerized microservices
+          - CI/CD workload hosting
+          - Multi-tenant Kubernetes workloads
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-elastic-block-store
+      title: Amazon Elastic Block Store
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Storage
+        serviceDescription: >-
+          Amazon Elastic Block Store (EBS) provides raw, block-level storage volumes for use with
+          Amazon EC2 instances. It functions like a virtual hard drive, enabling you to install
+          operating systems, run databases, or store persistent files that remain intact even when
+          an EC2 instance is stopped or restarted.
+        serviceExternalDoc: https://aws.amazon.com/ebs/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-elastic-block-store
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Persistent EC2 instance storage
+          - Database volume storage
+          - Snapshot-based disaster recovery
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-elasticache
+      title: Amazon ElastiCache
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          Amazon ElastiCache offers fully managed Redis and Memcached. Seamlessly deploy, operate,
+          and scale popular open source compatible in-memory data stores. Build data-intensive apps
+          or improve the performance of your existing apps by retrieving data from high throughput
+          and low latency in-memory data stores.
+        serviceExternalDoc: https://docs.aws.amazon.com/ElastiCache/
+        serviceInternalDoc: ./platforms/development/amazon/elasticache
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-elasticache
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Application caching layers
+          - Session store for web applications
+          - Real-time leaderboard and counters
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+          - mode
+          - node-type
+          - nodes
+          - encryption-in-transit
+          - encryption-at-rest
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-end-user-messaging
+      title: Amazon End User Messaging
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Messaging
+        serviceDescription: >-
+          AWS End User Messaging empowers developers to integrate scalable and reliable messaging
+          capabilities into their applications. Whether it is time-sensitive alerts, one-time
+          passwords, or two-way communications, AWS End User Messaging helps ensure your messages
+          reach their local or global destination across channels like SMS, MMS. AWS End User
+          Messaging helps unlock the full potential of your messaging strategy by connecting your
+          applications directly to your end-users across the channels they use and trust.
+        serviceExternalDoc: https://aws.amazon.com/sns/
+        serviceInternalDoc: ./platforms/development/amazon/eum
+        provisioningModel: Tier 3
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        serviceLimitations: SMS/MMS campaign registration must be approved before send access is granted.
+        fedRampStatus: FedRAMP In Process
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM Integration Platform Team
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-end-user-messaging
+        fundingApproach: Funding recouped
+        approvalWorkflow: Security Review
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Time-sensitive SMS/MMS alerts
+          - One-time passcode delivery
+          - Two-way customer text messaging
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - >-
+            Estimated Monthly Message Volume - Optional (Less than 500 / Greater than 500 but less
+            than 5000 / Greater than 5000)
+          - Destination (Local or International)
+          - Two-way SMS Messaging (Yes or No)
+          - >-
+            Originator Type (Long Code - Supports only voice messaging.; Short Code - Supports SMS
+            and MMS messaging.; Toll-Free – Supports SMS, MMS, and voice messaging.; 10DLC -
+            Supports SMS, MMS, and voice messaging.)
+          - >-
+            Registration Information (Please note it will take several weeks for registration to
+            complete) (Enter Campaign Description (Identify who the sender is; Identify who the
+            recipient is; Why messages are being sent to the intended recipient.); Company's SMS
+            Terms & Conditions (URL or File, less than 500KB))
+          - Company Privacy policy URL (Example - https://www.dhs.gov/topics/privacy)
+          - >-
+            Campaign opt-in workflow (Explain end-to-end how a user explicitly consents to receive
+            text messages.)
+          - >-
+            Opt-in confirmation message (Provide the message sent to recipients confirming with them
+            that they've opted in to your service.)
+          - Help message (Provide the message sent to end-users when they send the 'HELP' keyword.)
+          - >-
+            Stop message (Provide the message sent to end-users when they send the opt-out keywords
+            such as 'STOP'.)
+          - >-
+            Message Type - Transactional or Promotional (Needs to align with your campaign use case,
+            if it's misaligned your registration will be denied.)
+          - Use case – Details about how this campaign will be used for sending SMS messages.
+          - >-
+            Subscriber opt-in (Yes or No, Yes acknowledges you are required to collect and process
+            consumer opt-ins.)
+          - >-
+            Subscriber opt-out (Yes or No, Yes acknowledges you are required to collect and process
+            consumer opt-outs.)
+          - >-
+            Subscriber help (Yes or No, Yes confirms you've implemented automated 'HELP' replies
+            with sender contact info.)
+          - >-
+            Message Sample (At least one sample is required, minimum 20 characters, limited to 1024
+            characters. Include a sample message for each message you plan on sending from this
+            campaign, up to 5 samples.)
+          - MMS Sample – Optional with File attachment
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-groundtruth
+      title: Amazon Groundtruth
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: AI & Machine Learning
+        serviceDescription: >-
+          Amazon Ground Truth enables users with the ability to label image and text datasets to
+          provide the correct metadata for Machine Learning (ML) model training. Auto-labeling is a
+          ML enabled Ground Truth feature available to automatically complete labeling operations on
+          a dataset while using only part of the dataset that has been already manually labeled
+          within Ground Truth.
+        serviceExternalDoc: https://aws.amazon.com/sagemaker/groundtruth/
+        serviceInternalDoc: ./platforms/development/amazon/sagemaker-groundtruth
+        provisioningModel: Tier 3
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Ready
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM AI Platform Team
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-groundtruth
+        fundingApproach: Funding recouped
+        approvalWorkflow: Multi-Level Approval
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Training dataset labeling
+          - Human-in-the-loop annotation
+          - Auto-labeling for ML pipelines
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-guard-duty
+      title: Amazon Guard Duty
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Security Scanning
+        serviceDescription: >-
+          Amazon GuardDuty is a managed threat detection service that continuously monitors your AWS
+          environment for malicious activity, unauthorized behavior, and security compromises. It
+          uses machine learning, anomaly detection, and integrated threat intelligence to analyze
+          data across multiple AWS sources.
+        serviceExternalDoc: https://aws.amazon.com/guardduty/
+        serviceInternalDoc: >-
+          https://cloud-docs.cbp.dhs.gov/governance/compliancefaq.html#threat-monitoring-and-compliance-standards
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-guard-duty
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Continuous threat detection
+          - Anomaly and unauthorized-behavior monitoring
+          - Automated security finding triage
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-keyspaces
+      title: Amazon Keyspaces
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          Amazon Keyspaces (for Apache Cassandra) is a scalable, highly available, and managed
+          Apache Cassandra–compatible database service. With Amazon Keyspaces, you can run Cassandra
+          workloads on AWS using the same Cassandra application code and developer tools that you
+          use today. It is serverless and managed by AWS and does not require you to provision,
+          patch, or manage servers, and does not require you to install, maintain, or operate
+          software. The service can automatically scale tables up and down in response to
+          application traffic. Data is encrypted by default and Amazon Keyspaces backs up table data
+          continuously using point-in-time recovery. Keyspaces gives you the performance,
+          elasticity, and enterprise features you need to operate business-critical Cassandra
+          workloads at scale.
+        serviceExternalDoc: https://docs.aws.amazon.com/keyspaces/
+        serviceInternalDoc: ./platforms/development/amazon/keyspaces
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-keyspaces
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Cassandra-compatible workload migration
+          - High-throughput wide-column data
+          - IoT and time-series data storage
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Keyspace suffix (optional)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-kinesis-data-streams
+      title: Amazon Kinesis Data Streams
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Messaging
+        serviceDescription: >-
+          Amazon Kinesis Data Streams makes it easy to collect, process, and analyze real-time,
+          streaming data to get timely insights and react quickly to new information. Amazon Kinesis
+          offers key capabilities to cost-effectively process streaming data at any scale, along
+          with the flexibility to choose the tools that best suit the requirements of an
+          application. With Amazon Kinesis, one can ingest real-time data such as video, audio,
+          application logs, website clickstreams, and IoT telemetry data for machine learning,
+          analytics, and other applications. Amazon Kinesis enables one to process and analyze data
+          as it arrives and respond instantly instead of having to wait until all data is collected
+          before the processing can begin.
+        serviceExternalDoc: https://docs.aws.amazon.com/streams/
+        serviceInternalDoc: ./platforms/development/amazon/kinesis
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-kinesis-data-streams
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Real-time clickstream analytics
+          - IoT telemetry ingestion
+          - Streaming ETL pipelines
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Quantity
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-mq
+      title: Amazon MQ
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Messaging
+        serviceDescription: >-
+          Amazon MQ is a managed message broker service for Apache ActiveMQ and RabbitMQ that makes
+          it easy to set up and operate message brokers on AWS. Amazon MQ reduces your operational
+          responsibilities by managing the provisioning, setup, and maintenance of message brokers
+          for you. Because Amazon MQ connects to your current applications with industry-standard
+          APIs and protocols, you can easily migrate to AWS without having to rewrite code.
+        serviceExternalDoc: https://docs.aws.amazon.com/amazon-mq/
+        serviceInternalDoc: ./platforms/development/amazon/mq
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-mq
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Legacy ActiveMQ/RabbitMQ migrations
+          - Protocol-standard message brokering
+          - Enterprise application integration
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Quantity
+          - Engine Type (ActiveMQ or RabbitMQ)
+          - >-
+            Deployment mode (SINGLE_INSTANCE [default], ACTIVE_STANDBY_MULTI_AZ, or
+            CLUSTER_MULTI_AZ)
+          - Broker instance types (see AWS documentation for supported instance types)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-msk
+      title: Amazon MSK
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Streaming
+        serviceDescription: >-
+          AWS MSK (Managed Streaming for Apache Kafka) is a fully managed service that simplifies
+          running Apache Kafka applications on AWS. It handles infrastructure tasks like
+          provisioning, scaling, patching, and multi-AZ replication, letting you build real-time
+          data pipelines and streaming applications without managing the underlying servers.
+        serviceExternalDoc: https://docs.aws.amazon.com/msk/
+        serviceInternalDoc: ./platforms/development/amazon/msk
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-msk
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 5 business days
+        serviceUseCases:
+          - Real-time streaming data pipelines
+          - Event-driven microservice communication
+          - Kafka workload migration to managed infrastructure
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+          - >-
+            number-of-nodes (non-prod defaults to a 3 node cluster unless requested otherwise; prod
+            has a minimum of 6 nodes, in increments of 3)
+          - >-
+            For PROD, the Amazon EC2 instance type to use for brokers (kafka.m5.large,
+            kafka.m5.xlarge, kafka.m5.2xlarge, kafka.m5.4xlarge, kafka.m5.12xlarge, or
+            kafka.m5.24xlarge)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-neptune
+      title: Amazon Neptune
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          Amazon Neptune is a service that includes a graph database engine, graph analytics
+          database engine, graph machine learning (ML), and visualization tools, which can be used
+          individually or together. The Neptune service makes it easy to work with graph data on
+          AWS.
+        serviceExternalDoc: https://docs.aws.amazon.com/neptune/
+        serviceInternalDoc: ./platforms/development/amazon/neptunedb
+        provisioningModel: Tier 3
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM Data Platform
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-neptune
+        fundingApproach: Funding recouped
+        approvalWorkflow: Architecture Review
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Graph relationship analysis
+          - Fraud detection graphs
+          - Knowledge graph applications
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Quantity
+          - Multi-AZ
+          - Instance Type/Instance Class
+          - Storage
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-opensearch-service
+      title: Amazon OpenSearch Service
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Monitoring & Management
+        serviceDescription: >-
+          Amazon OpenSearch Service makes it easy for you to perform interactive log analytics,
+          real-time application monitoring, website search, and more. OpenSearch is an open source,
+          distributed search and analytics suite derived from Elasticsearch. Amazon OpenSearch
+          Service offers the latest versions of OpenSearch, support for 19 versions of Elasticsearch
+          (1.5 to 7.10 versions), and visualization capabilities powered by OpenSearch Dashboards
+          and Kibana (1.5 to 7.10 versions).
+        serviceExternalDoc: https://aws.amazon.com/opensearch-service/
+        serviceInternalDoc: ./platforms/development/amazon/opensearch
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-opensearch-service
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 5 business days
+        serviceUseCases:
+          - Interactive log analytics
+          - Full-text search for applications
+          - Real-time application monitoring dashboards
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - quantity
+          - domain-name
+          - multi-az (If so, 2AZs?)
+          - es-version
+          - data-node-instance-type
+          - number-of-data-node-instances
+          - dedicated-to-master-instances
+          - master-instance-type
+          - storage
+          - encryption
+          - snapshot
+          - Will this be an internal only accessible domain (i.e. No access over the internet)?
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-rds-aurora
+      title: Amazon RDS Aurora
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          Amazon Aurora is a MySQL and PostgreSQL-compatible relational database built for the cloud
+          that combines the performance and availability of traditional enterprise databases with
+          the simplicity and cost-effectiveness of open source databases. Amazon Aurora is up to
+          five times faster than standard MySQL databases and three times faster than standard
+          PostgreSQL databases. It provides the security, availability, and reliability of
+          commercial databases at 1/10th the cost. Amazon Aurora is fully managed by Amazon
+          Relational Database Service (RDS), which automates time-consuming administration tasks
+          like hardware provisioning, database setup, patching, and backups. Amazon Aurora features
+          a distributed, fault-tolerant, self-healing storage system that auto-scales up to 128TB
+          per database instance. It delivers high performance and availability with up to 15
+          low-latency read replicas, point-in-time recovery, continuous backup to Amazon S3, and
+          replication across three Availability Zones.
+        serviceExternalDoc: https://aws.amazon.com/rds/aurora/
+        serviceInternalDoc: ./platforms/development/amazon/rds
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-rds-aurora
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: 1 business day
+        serviceUseCases:
+          - High-throughput relational workloads
+          - MySQL/PostgreSQL-compatible migrations
+          - Read-replica scaling for reporting
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-rds-mysql
+      title: Amazon RDS MySQL
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          RDS is a distributed relational database service by Amazon Web Services (AWS). It is a web
+          service running "in the cloud" designed to simplify the setup, operation, and scaling of a
+          relational database for use in applications. Complex administration processes like
+          patching the database software, backing up databases and enabling point-in-time recovery
+          are managed automatically. Scaling storage and compute resources can be performed by a
+          single API call.
+        serviceExternalDoc: https://aws.amazon.com/rds/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/platforms/development/amazon/rds.html#mysql
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-rds-mysql
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: 1 business day
+        serviceUseCases:
+          - MySQL application backends
+          - Legacy database lift-and-shift
+          - Web application data stores
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Quantity
+          - Engine (MySQL)
+          - Instance Type/Instance Class
+          - Multi-AZ
+          - Storage
+          - 'RDS Proxy needed (without native connection pooling capabilities): Yes/No'
+          - 'Target database endpoint: If yes'
+          - 'Serverless (Aurora PostgreSQL/MySQL only): Yes/No'
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-rds-oracle
+      title: Amazon RDS Oracle
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          RDS is a distributed relational database service by Amazon Web Services (AWS). It is a web
+          service running "in the cloud" designed to simplify the setup, operation, and scaling of a
+          relational database for use in applications. Complex administration processes like
+          patching the database software, backing up databases and enabling point-in-time recovery
+          are managed automatically. Scaling storage and compute resources can be performed by a
+          single API call.
+        serviceExternalDoc: https://aws.amazon.com/rds/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/platforms/development/amazon/rds.html#oracle
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-rds-oracle
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Oracle-dependent COTS applications
+          - Enterprise transactional systems
+          - Licensed database migrations
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Quantity
+          - Engine (Oracle)
+          - Instance Type/Instance Class
+          - Multi-AZ
+          - Storage
+          - 'RDS Proxy needed (without native connection pooling capabilities): Yes/No'
+          - 'Target database endpoint: If yes'
+          - 'Serverless (Aurora PostgreSQL/MySQL only): Yes/No'
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-rds-postgresql
+      title: Amazon RDS PostgreSQL
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          Amazon RDS is a web service that makes it easier to set up, operate, and scale a
+          relational database in the cloud. It provides cost-efficient, resizable capacity for an
+          industry-standard relational database and manages common database administration tasks.
+          RDS (Postgres) specifically makes it easy to set up, operate, and scale PostgreSQL
+          deployments in the cloud.
+        serviceExternalDoc: https://aws.amazon.com/rds/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/platforms/development/amazon/rds.html#postgresql
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-rds-postgresql
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: 1 business day
+        serviceUseCases:
+          - PostgreSQL application backends
+          - Geospatial data workloads
+          - Multi-tenant SaaS databases
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Quantity
+          - Engine (Postgres)
+          - Instance Type/Instance Class
+          - Multi-AZ
+          - Storage
+          - 'RDS Proxy needed (without native connection pooling capabilities): Yes/No'
+          - 'Target database endpoint: If yes'
+          - 'Serverless (Aurora PostgreSQL/MySQL only): Yes/No'
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-rds-proxy
+      title: Amazon RDS Proxy
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          Amazon RDS Proxy is a fully managed database proxy designed to enhance the scalability,
+          availability, and security of applications interacting with Amazon RDS databases. It
+          achieves this by pooling and sharing database connections, reducing the overhead of
+          establishing new connections, and improving resilience during database failovers.
+        serviceExternalDoc: https://aws.amazon.com/rds/proxy/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/platforms/development/amazon/rds.html#amazon-rds-proxy
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-rds-proxy
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Connection pooling for serverless apps
+          - Improved database failover resilience
+          - Reducing connection overhead at scale
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-rds-sql-server
+      title: Amazon RDS SQL Server
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          Amazon RDS SQL Server is a relational database management system developed by Microsoft.
+          Amazon RDS for SQL Server supports the "License Included" licensing model. You do not need
+          separately purchased Microsoft SQL Server licenses.
+        serviceExternalDoc: https://aws.amazon.com/rds/sqlserver/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-rds-sql-server
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - SQL Server-dependent COTS applications
+          - Windows application backends
+          - Licensed database migrations
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Quantity
+          - Engine (SQL Server)
+          - Instance Type/Instance Class
+          - Multi-AZ
+          - Storage
+          - 'RDS Proxy needed (without native connection pooling capabilities): Yes/No'
+          - 'Target database endpoint: If yes'
+          - 'Serverless (Aurora PostgreSQL/MySQL only): Yes/No'
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-rds
+      title: Amazon RDS
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          A managed relational database service that provides several familiar database engines to
+          choose from, including PostgreSQL, MySQL, and Oracle.
+        serviceExternalDoc: https://docs.aws.amazon.com/rds/
+        serviceInternalDoc: ./platforms/development/amazon/rds
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-rds
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: 1 business day
+        serviceUseCases:
+          - Transactional application databases
+          - Reporting and analytics
+          - COTS application backends
+          - Disaster recovery replicas
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Quantity
+          - Engine
+          - Instance Type/Instance Class
+          - Multi-AZ
+          - Storage
+          - 'RDS Proxy needed (without native connection pooling capabilities): Yes/No'
+          - 'Target database endpoint: If yes'
+          - 'Serverless (Aurora PostgreSQL/MySQL only): Yes/No'
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-redshift
+      title: Amazon Redshift
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Database
+        serviceDescription: >-
+          AWS Redshift is an Internet hosting service and data warehouse product which forms part of
+          the larger cloud-computing platform Amazon Web Services. Now includes the Zero-ETL
+          integration for easier data ingestion.
+        serviceExternalDoc: https://docs.aws.amazon.com/redshift/
+        serviceInternalDoc: ./platforms/development/amazon/redshift
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-redshift
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 5 business days
+        serviceUseCases:
+          - Enterprise data warehousing
+          - BI dashboard reporting
+          - Zero-ETL analytics pipelines
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - enable_logging (Optional)
+          - 'cluster_node_type (ex: "ra3.xlplus")'
+          - cluster_number_of_nodes
+          - zero-etl integration (Optional) (source RDS or cluster; target Redshift cluster)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-s3-table-bucket
+      title: Amazon S3 Table Bucket
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Storage
+        serviceDescription: >-
+          Table buckets are an Amazon S3 bucket type that can be used to create and store tables as
+          S3 resources. They are used to store tabular data and metadata as objects for use in
+          analytics workloads.
+        serviceExternalDoc: https://aws.amazon.com/s3/
+        serviceInternalDoc: >-
+          https://gitlab-pages.cbp.dhs.gov/cloud/documentation/cim-7266/platforms/development/amazon/s3.html
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Ready
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-s3-table-bucket
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 5 business days
+        serviceUseCases:
+          - Tabular analytics data storage
+          - Apache Iceberg table management
+          - Structured data lake workloads
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+          - quantity
+          - bucket-name
+          - actions (GetObject, PutObject, DeleteObject)
+          - bucket-type (table)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-s3-vector-bucket
+      title: Amazon S3 Vector Bucket
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Storage
+        serviceDescription: >-
+          Vector buckets are a type of Amazon S3 bucket designed specifically for storing and
+          querying vector data. They are optimized for long-term vector storage with sub-second
+          search times.
+        serviceExternalDoc: https://aws.amazon.com/s3/
+        serviceInternalDoc: >-
+          https://gitlab-pages.cbp.dhs.gov/cloud/documentation/cim-7266/platforms/development/amazon/s3.html#s3-vector-buckets
+        provisioningModel: Tier 3
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Ready
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM Storage Platform
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-s3-vector-bucket
+        fundingApproach: Funding recouped
+        approvalWorkflow: Architecture Review
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Vector embedding storage for AI/ML search
+          - Sub-second similarity search
+          - Retrieval-augmented generation (RAG) pipelines
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+          - quantity
+          - bucket-name
+          - actions (GetObject, PutObject, DeleteObject)
+          - bucket-type (vector)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-s3
+      title: Amazon S3
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Storage
+        serviceDescription: >-
+          Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storage
+          through web services interfaces (REST, SOAP, and BitTorrent). Instead of organizing files
+          in a traditional folder hierarchy (like a computer hard drive), S3 treats each file as an
+          independent "object" stored in a flat architecture. Amazon S3 supports three types of
+          buckets. The General bucket type is for general object storage.
+        serviceExternalDoc: https://docs.aws.amazon.com/s3/
+        serviceInternalDoc: ./platforms/development/amazon/s3
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-s3
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Static website hosting
+          - Data lake storage
+          - Backup and archive
+          - Application artifact storage
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+          - quantity
+          - bucket-name
+          - actions (GetObject, PutObject, DeleteObject)
+          - bucket-type (general)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-sagemaker-studio
+      title: Amazon SageMaker Studio
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: AI & Machine Learning
+        serviceDescription: >-
+          Amazon SageMaker Studio provides a single, unified web-based interface with purpose-built
+          tools to prepare, build, train, and deploy Machine Learning models using your preferred
+          IDE.
+        serviceExternalDoc: https://aws.amazon.com/sagemaker/studio/
+        serviceInternalDoc: ./platforms/development/amazon/sagemaker-studio
+        provisioningModel: Tier 3
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM AI Platform Team
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-sagemaker-studio
+        fundingApproach: Funding recouped
+        approvalWorkflow: Multi-Level Approval
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Unified ML development IDE
+          - Notebook-based model experimentation
+          - End-to-end ML workflow authoring
+        serviceOnboardingRequirements:
+          - cost_center
+          - project (note that the project will be the SageMaker Studio domain name)
+          - environment
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-sagemaker
+      title: Amazon SageMaker
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: AI & Machine Learning
+        serviceDescription: >-
+          Amazon SageMaker provides data scientists and developers with a fully managed environment
+          to prepare, build, train, and deploy Machine Learning models with fully managed
+          infrastructure, tools, and workflows.
+        serviceExternalDoc: https://docs.aws.amazon.com/sagemaker/
+        serviceInternalDoc: ./platforms/development/amazon/sagemaker-notebook
+        provisioningModel: Tier 3
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        serviceLimitations: GPU instances require separate approval.
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM AI Platform Team
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-sagemaker
+        fundingApproach: Funding recouped
+        approvalWorkflow: Multi-Level Approval
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Custom ML model training
+          - Batch inference pipelines
+          - Real-time prediction endpoints
+          - MLOps and model versioning
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Instance Type (The name of the ML instance type, defaults to ml.t3.medium)
+          - >-
+            Volume size (The size, in GB, of the ML storage volume to attach to the notebook
+            instance. Defaults to 5 GB)
+          - S3 bucket (Does the Sagemaker instance need a new S3 bucket? Yes or No?)
+          - >-
+            Additional IAM Policies (Optional) (List of all SageMaker IAM Actions that the End User
+            plans to perform)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-sns
+      title: Amazon SNS
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Messaging
+        serviceDescription: >-
+          Amazon SNS is a fully managed, reliable pub/sub messaging service that enables
+          asynchronous communication between microservices or other distributed system components.
+          It allows publishers to send messages to many subscribers including Lambda and SQS using
+          one or more topics. While SQS offers persistence and a pull-based model, where a consumer
+          polls a queue to process single messages, SNS offers a push-based fire and forget model,
+          where multiple consumers subscribe to a topic and each process their own copy of a
+          message.
+        serviceExternalDoc: https://aws.amazon.com/sns/
+        serviceInternalDoc: >-
+          https://gitlab-pages.cbp.dhs.gov/cloud/documentation/cim-7266/platforms/development/amazon/sns.html
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-sns
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Pub/sub fan-out messaging
+          - Fault-tolerant event notification
+          - Lambda and SQS event triggers
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - Topic Names
+          - Need FIFO (First-In-First-Out) Topic
+          - Need Disable Content-Based Deduplication
+          - How many SNS Publishers (Optional)
+          - How many SNS Subscribers (Optional)
+          - How many Lambda Publishers (Optional)
+          - How many Lambda Subscribers (Optional)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-sqs
+      title: Amazon SQS
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Messaging
+        serviceDescription: >-
+          Amazon SQS is a fully managed message queuing service that decouples and scales
+          microservices, distributed systems, and serverless applications. SQS eliminates the
+          complexity and overhead associated with managing and operating message-oriented middleware
+          and empowers developers to focus on differentiating work. Using SQS, one can send, store,
+          and receive messages between software components at any volume, without losing messages or
+          requiring other services to be available. SQS offers two types of message queues. Standard
+          queues offer maximum throughput, best-effort ordering, and at-least-once delivery. SQS
+          FIFO queues are designed to guarantee that messages are processed exactly once, in the
+          exact order that they are sent.
+        serviceExternalDoc: https://docs.aws.amazon.com/sqs/
+        serviceInternalDoc: ./platforms/development/amazon/sqs
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-sqs
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Decoupled microservice messaging
+          - Work queue processing
+          - Dead-letter queue handling for failed messages
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+          - queue-name
+          - suffix (optional)
+          - queue-type (standard or fifo)
+          - fifo-content-based-deduplication (true or false, for fifo queues only)
+          - message-retention-period (e.g., 4 days)
+          - visibility-timeout (in seconds)
+          - receive-message-wait-time (in seconds)
+          - deadletter-queue
+          - dlq-maximum-receives (number of receives before moving to dlq)
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: amazon-vpc
+      title: Amazon VPC
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Infrastructure & Platforms
+        serviceDescription: >-
+          Amazon Virtual Private Cloud (Amazon VPC) is a logically isolated virtual network that
+          closely resembles a traditional network and has subnets and IP addresses that are
+          allocated to the various resources that are provisioned within the VPC. VPCs are
+          configured by the administrators and are not a service that would be explicitly requested.
+        serviceExternalDoc: https://aws.amazon.com/vpc/
+        serviceInternalDoc: ./platforms/development/network
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#amazon-vpc
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 2 business days
+        serviceUseCases:
+          - Isolated workload networking
+          - Hybrid connectivity to on-prem
+          - Multi-tier application segmentation
+          - Security group enforcement
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: auto-scaling
+      title: Auto-Scaling
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Container Platform
+        serviceDescription: >-
+          Automatically adjusts the number of compute resources in your application to maintain
+          steady, predictable performance at the lowest possible cost. In EKS, this is often handled
+          by Horizontal Pod Autoscalers (HPAs).
+        serviceExternalDoc: https://docs.aws.amazon.com/autoscaling/
+        serviceInternalDoc: ./platforms/cicd/eks/auto-scaling
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#auto-scaling
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Horizontal pod autoscaling in EKS
+          - Elastic capacity for variable traffic
+          - Cost-optimized compute scaling
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-backup
+      title: AWS Backup
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Storage
+        serviceDescription: >-
+          AWS Backup is a fully managed service that centralizes and automates data protection
+          across AWS services and hybrid workloads.
+        serviceExternalDoc: https://docs.aws.amazon.com/aws-backup/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-backup
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Centralized backup policy management
+          - Cross-service data protection
+          - Automated backup retention and lifecycle
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-cloudtrail
+      title: AWS CloudTrail
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Monitoring & Management
+        serviceDescription: >-
+          AWS CloudTrail is an AWS service that helps you enable operational and risk auditing,
+          governance, and compliance of your AWS account. Actions taken by a user, role, or an AWS
+          service are recorded as events in CloudTrail. Events include actions taken in the AWS
+          Management Console, AWS Command Line Interface, and AWS SDKs and APIs.
+        serviceExternalDoc: https://aws.amazon.com/cloudtrail/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-cloudtrail
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Account activity auditing
+          - Governance and compliance logging
+          - Security incident investigation
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-cloudwatch-database-insights
+      title: AWS CloudWatch Database Insights
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Monitoring & Management
+        serviceDescription: >-
+          Amazon CloudWatch Database Insights is a comprehensive, unified observability solution for
+          monitoring and troubleshooting Amazon RDS and Aurora databases. It provides a single
+          dashboard for fleet-level health, automatic telemetry collection, and AI-powered
+          diagnostics to pinpoint bottlenecks in relational databases like PostgreSQL, MySQL,
+          Oracle, and SQL Server.
+        serviceExternalDoc: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Database-Insights.html
+        serviceInternalDoc: >-
+          https://cloud-docs.cbp.dhs.gov/platforms/development/amazon/rds.html#aws-database-insights-di
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-cloudwatch-database-insights
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Fleet-level RDS/Aurora health monitoring
+          - AI-assisted database bottleneck diagnosis
+          - Unified database performance dashboards
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-cloudwatch
+      title: AWS CloudWatch
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Monitoring & Management
+        serviceDescription: >-
+          Amazon CloudWatch is a monitoring and observability service for Amazon Web Services (AWS)
+          resources and applications. It collects and tracks metrics, collects and stores log files,
+          sets alarms, and automatically reacts to changes in your infrastructure to keep your
+          systems running smoothly.
+        serviceExternalDoc: https://docs.aws.amazon.com/cloudwatch/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-cloudwatch
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Metrics and alarms for AWS resources
+          - Centralized log aggregation
+          - Automated remediation triggers
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-dms
+      title: AWS DMS
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Migration & Transfer
+        serviceDescription: >-
+          AWS DMS enables database migration to AWS quickly and securely. The source database
+          remains fully operational during migration, minimizing downtime to applications that rely
+          on the database. The AWS Database Migration Service can migrate data to and from most
+          widely used commercial and open-source databases. The service supports homogenous
+          migrations such as Oracle to Oracle, as well as heterogeneous migrations between different
+          database platforms, such as Oracle to Amazon Aurora or Microsoft SQL Server to MySQL. One
+          can stream data to Amazon Redshift, Amazon DynamoDB, and Amazon S3 from any of the
+          supported sources, which are Amazon Aurora, PostgreSQL, MySQL, MariaDB, Oracle Database,
+          SAP ASE, SQL Server, IBM DB2 LUW, and MongoDB, enabling consolidation and easy analysis of
+          data in a petabyte-scale data warehouse. AWS Database Migration Service can also be used
+          for continuous data replication with high availability.
+        serviceExternalDoc: https://docs.aws.amazon.com/dms/
+        serviceInternalDoc: ./platforms/development/amazon/dms
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-dms
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 5 business days
+        serviceUseCases:
+          - Homogeneous and heterogeneous database migration
+          - Continuous data replication
+          - On-prem to cloud database cutover
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+          - Full-load OR Full-load plus on-going replication
+          - Source database connection parameters
+          - Target database connection parameters
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-glue
+      title: AWS Glue
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Analytics
+        serviceDescription: >-
+          AWS Glue is a serverless data integration service that makes it easy to discover, prepare,
+          and combine data for analytics, machine learning, and application development. AWS Glue
+          provides all the capabilities needed for data integration so that you can start analyzing
+          your data and putting it to use in minutes instead of months.
+        serviceExternalDoc: https://docs.aws.amazon.com/glue/
+        serviceInternalDoc: ./platforms/development/amazon/glue
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-glue
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - ETL job orchestration
+          - Data catalog and schema discovery
+          - Serverless data preparation pipelines
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+          - Requested name for glue-db
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-iam
+      title: AWS IAM
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Identity & Access Management
+        serviceDescription: >-
+          AWS IAM (Identity and Access Management) is a core security service that controls who can
+          authenticate (who you are) and authorize (what you are allowed to do) within your AWS
+          environment. Access is denied by default unless explicitly granted by a policy.
+        serviceExternalDoc: https://docs.aws.amazon.com/iam/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/platforms/development/amazon/iam.html
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-iam
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Role-based access control
+          - Cross-account resource sharing
+          - Service-to-service authentication
+          - Least-privilege policy enforcement
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-kms
+      title: AWS KMS
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Secret Management
+        serviceDescription: >-
+          AWS KMS keys and functionality are used by other AWS services and is not a service that
+          would need to be explicitly requested. It is an encryption and key management service
+          scaled for cloud. The AWS KMS keys are protected by FIPS 140-3 Security Level 3 validated
+          hardware security modules (HSM).
+        serviceExternalDoc: https://aws.amazon.com/kms/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        serviceLimitations: HSM key type requires security board approval.
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-kms
+        fundingApproach: ECSD pay
+        approvalWorkflow: Security Review
+        provisioningSLA: 5 business days
+        serviceUseCases:
+          - Data-at-rest encryption
+          - S3 server-side encryption
+          - EBS volume encryption
+          - Application-level key management
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-lambda
+      title: AWS Lambda
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Compute
+        serviceDescription: >-
+          AWS Lambda is a serverless, event-driven compute service that lets you run code for
+          virtually any type of application or backend service without provisioning or managing
+          servers.
+        serviceExternalDoc: https://docs.aws.amazon.com/lambda/
+        serviceInternalDoc: ./platforms/development/amazon/lambda
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-lambda
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Event-driven microservices
+          - API backend functions
+          - Scheduled data processing
+          - S3 trigger workflows
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+          - package_type ("Image" or "Zip")
+          - Description
+          - handler
+          - >-
+            Memory_size (defaults to 128MB) (Note- Amount of memory in MB your Lambda Function can
+            use at runtime.)
+          - >-
+            Timeout (defaults to seconds) (Note- The amount of time your Lambda Function has to run
+            in seconds)
+          - >-
+            Concurrency (defaults to -1) (Note- The amount of reserved concurrent executions for
+            this lambda function. A value of 0 disables lambda from being triggered and -1 removes
+            any concurrency limitations.)
+          - tracing_config ("PassThrough" or "Active")
+          - >-
+            Environment Variables (No PII or Sensitive data) (Optional) (Note- Environment variables
+            will be added to the TFE workspace and hence cannot contain any sensitive data.)
+          - >-
+            Runtime (Required for "Zip" file-based deployments) (Note- Please see Cloud Docs for
+            supported values.)
+          - >-
+            GitLab Artifacts Repository for Jenkins Pipeline Deployment (Note- CME needs this for
+            setting up Jenkinsfile / config.json)
+          - >-
+            File System Configuration - EFS Resource Name (Optional) (Create new or use an existing
+            one?; mountpath (should start with /mnt))
+          - >-
+            Dead Letter Configuration – SQS DLQ Resource Name (Optional) (Create a new DLQ or use an
+            existing one?)
+          - >-
+            Lambda Trigger Configuration (Optional) (S3 Bucket Name (Create a new one or use an
+            existing one?); SQS Resource Name (Create a new one or use an existing one?);
+            EventBridge (Optional) (Schedule_expression - The scheduling expression. For example,
+            cron(0 20 * * ? *) or rate(5 minutes). At least one of schedule_expression or
+            event_pattern is required.))
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-secrets-manager
+      title: AWS Secrets Manager
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Secret Management
+        serviceDescription: >-
+          AWS Secrets Manager helps you manage, retrieve, and rotate credentials, tokens, API keys,
+          and other secrets throughout their lifecycles. Many AWS services store and use secrets in
+          Secrets Manager.
+        serviceExternalDoc: https://aws.amazon.com/secrets-manager/
+        serviceInternalDoc: ./platforms/development/amazon/secrets-mngr
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-secrets-manager
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Database credential rotation
+          - API key storage
+          - Application config secrets
+          - Cross-service secret sharing
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-security-hub
+      title: AWS Security Hub
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Security Scanning
+        serviceDescription: >-
+          AWS Security Hub is a cloud security posture management (CSPM) and SOAR (Security
+          Orchestration, Automation, and Response) service. It evaluates your AWS environment
+          against industry standards and best practices and compliance frameworks like CIS, PCI DSS,
+          and NIST, assigning you a percentage-based security score.
+        serviceExternalDoc: https://aws.amazon.com/security-hub/
+        serviceInternalDoc: >-
+          https://cloud-docs.cbp.dhs.gov/governance/compliancefaq.html#threat-monitoring-and-compliance-standards
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-security-hub
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Cloud security posture management
+          - Compliance scoring against CIS/PCI DSS/NIST
+          - Centralized security finding aggregation
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aws-transfer-family
+      title: AWS Transfer Family
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Migration & Transfer
+        serviceDescription: AWS Transfer is a fully managed service for transfer of files over SFTP.
+        serviceExternalDoc: https://aws.amazon.com/aws-transfer-family
+        serviceInternalDoc: ./platforms/development/amazon/transfer
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aws-transfer-family
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 5 business days
+        serviceUseCases:
+          - SFTP file exchange with external partners
+          - Legacy file-transfer workflow migration
+          - Managed inbound/outbound file transfer
+        serviceOnboardingRequirements:
+          - cost_center
+          - project
+          - environment
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: demilitarized-zone
+      title: Demilitarized Zone
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Infrastructure & Platforms
+        serviceDescription: >-
+          CBP AWS Trusted Internet Connections 3.0 (in short CATIC 3.0) allows CBP project teams to
+          provide external connectivity to their services running in the on-premises and cloud.
+          CATIC 3.0 is CBP's alternative to existing demilitarized zones (DMZ) — DHS TIC and DHS
+          Cloudflare — to expose CBP services to users in the public Internet.
+        serviceExternalDoc: https://docs.aws.amazon.com/
+        serviceInternalDoc: https://gitlab-pages.cbp.dhs.gov/cloud/documentation/cim-7266/platforms/dmz/
+        provisioningModel: Tier 3
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM Network Services
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#demilitarized-zone
+        fundingApproach: Funding recouped
+        approvalWorkflow: Security Review
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - External connectivity for internet-facing services
+          - Trusted Internet Connection (TIC) compliance
+          - Public-facing API exposure
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: ec2-image-builder
+      title: EC2 Image Builder
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Compute
+        serviceDescription: >-
+          EC2 Image Builder is a fully managed AWS service that helps the user to automate the
+          creation, management, and deployment of customized, secure, and up-to-date server images.
+          The user can use the AWS Management Console, AWS Command Line Interface, or APIs to create
+          custom images in their AWS account. The EC2 Image builder increases productivity and
+          reduces operations for building compliant and up-to-date images. It increases service up
+          time and raises the security bar for deployments.
+        serviceExternalDoc: https://docs.aws.amazon.com/imagebuilder/
+        serviceInternalDoc: ./platforms/development/amazon/ec2-image-builder
+        provisioningModel: Tier 2
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#ec2-image-builder
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Golden AMI pipelines
+          - Compliance-hardened image baselines
+          - Automated patching of server images
+        serviceOnboardingRequirements:
+          - Tier 2 account name
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: elastic-load-balancing
+      title: Elastic Load Balancing
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: AWS
+        serviceCategory: Container Platform
+        serviceDescription: >-
+          Amazon ELB automatically distributes incoming application traffic across multiple targets,
+          such as EC2 instances. It monitors the health of registered targets and routes traffic
+          only to the healthy targets. ELB supports two types of load balancers, Application Load
+          Balancers and Classic Load Balancers.
+        serviceExternalDoc: https://docs.aws.amazon.com/elasticloadbalancing/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CACE
+        serviceOwner: Natasha Romanoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#elastic-load-balancing
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Application and network load balancing
+          - Blue-green and canary traffic shifting
+          - TLS termination for containerized services
+        serviceOnboardingRequirements:
+          - cost-center
+          - project
+          - environment
+          - quantity
+          - type (application or network)
+          - scheme (internal or internet-facing)
+          - subnets (a comma-separated list of subnet-ids)
+          - listener-ports (a comma-separated list, e.g., 80, 443)
+          - >-
+            Application Load Balancers (default-ssl-certificate-arn (if using https);
+            security-groups (a comma-separated list of security-group-ids); target-groups (list of
+            all groups) (for-each-target-group-provide (protocol (e.g., http); port (e.g., 8080);
+            URL to re-route; routing-rules (if using multiple target groups))))
+          - >-
+            Network Load Balancers (target-groups (list of all groups)
+            (for-each-target-group-provide (port (e.g., 8443))))
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: aks
+      title: Azure Kubernetes Service
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Compute
+        serviceDescription: Deploy and operate containerized workloads on a managed Kubernetes control plane.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 3
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        serviceLimitations: Max 10 node pools per cluster.
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM Compute Platform
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#aks
+        fundingApproach: Funding recouped
+        approvalWorkflow: Architecture Review
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Containerized microservices
+          - CI/CD pipeline hosting
+          - Stateful application deployment
+          - Multi-tenant workloads
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-ad
+      title: Microsoft Entra ID
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Security
+        serviceDescription: >-
+          Cloud-based identity and access management for employees, partners, and customers at
+          enterprise scale.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 2
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-ad
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 2 business days
+        serviceUseCases:
+          - Single sign-on federation
+          - MFA enforcement
+          - Conditional access policies
+          - B2B external identity management
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-blob
+      title: Azure Blob Storage
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Storage
+        serviceDescription: >-
+          Massively scalable object storage for unstructured data including documents, media files,
+          and backups.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-blob
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Backup and disaster recovery
+          - Data lake and analytics
+          - Static content delivery
+          - Log and telemetry archiving
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-files
+      title: Azure Files
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Storage
+        serviceDescription: >-
+          Fully managed cloud file shares accessible via SMB and NFS protocols for lift-and-shift
+          scenarios.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-files
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Shared network drive replacement
+          - Application config file storage
+          - Legacy app lift-and-shift
+          - Azure VM shared storage
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-frontdoor
+      title: Azure Front Door
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Networking
+        serviceDescription: >-
+          Global load balancer and CDN with built-in WAF, SSL offload, and intelligent traffic
+          routing.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 2
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        serviceLimitations: WAF rule customization requires security team sign-off.
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Prohibited
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-frontdoor
+        fundingApproach: Funding recouped
+        approvalWorkflow: Security Review
+        provisioningSLA: 5 business days
+        serviceUseCases:
+          - Global load balancing
+          - Web application firewall
+          - SSL offloading
+          - Blue-green and canary deployments
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-functions
+      title: Azure Functions
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Compute
+        serviceDescription: Event-driven serverless compute that scales automatically with consumption-based billing.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-functions
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Event-driven integrations
+          - HTTP trigger APIs
+          - Timer-based batch jobs
+          - Queue processing workflows
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-keyvault
+      title: Azure Key Vault
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Security
+        serviceDescription: >-
+          Safeguard cryptographic keys, secrets, and certificates used by cloud applications and
+          services.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-keyvault
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Certificate lifecycle management
+          - Encryption key storage
+          - Connection string secrets
+          - Managed HSM for high-assurance keys
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-ml
+      title: Azure Machine Learning
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: AI & Machine Learning
+        serviceDescription: >-
+          End-to-end platform for building, training, and deploying ML models with MLOps
+          capabilities.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 2
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-ml
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Automated ML experiments
+          - Model registry and versioning
+          - Data labeling pipelines
+          - Responsible AI dashboards
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-openai
+      title: Azure OpenAI Service
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: AI & Machine Learning
+        serviceDescription: >-
+          Access OpenAI's powerful models including GPT-4 and DALL-E through Azure's enterprise
+          infrastructure.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 4
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        serviceLimitations: US regions only; not approved for customer-facing PII.
+        fedRampStatus: FedRAMP In Process
+        trmStatus: Prohibited
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-openai
+        fundingApproach: Funding recouped
+        approvalWorkflow: Multi-Level Approval
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Natural language processing
+          - Code completion and review
+          - Semantic search
+          - Document classification
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-vm
+      title: Azure Virtual Machines
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Compute
+        serviceDescription: On-demand scalable compute with the flexibility to choose OS, size, and configuration.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-vm
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Lift-and-shift migrations
+          - Dev and test environments
+          - Legacy application hosting
+          - Windows workloads
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: azure-vnet
+      title: Azure Virtual Network
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Networking
+        serviceDescription: >-
+          Provision private networks and securely connect Azure resources with full control over IP
+          addressing.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 2
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#azure-vnet
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 2 business days
+        serviceUseCases:
+          - Private workload isolation
+          - Hybrid network connectivity
+          - Application gateway integration
+          - Subnet-level access controls
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: cosmos-db
+      title: Azure Cosmos DB
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Database
+        serviceDescription: >-
+          Globally distributed, multi-model database service for any scale with guaranteed low
+          latency.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 2
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        serviceLimitations: Multi-region writes require architecture review.
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#cosmos-db
+        fundingApproach: Funding recouped
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 3 business days
+        serviceUseCases:
+          - Globally distributed applications
+          - Real-time personalization
+          - Multi-region writes
+          - Catalog and inventory systems
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: pg
+      title: Managed PostgreSQL (Azure)
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Azure
+        serviceCategory: Database
+        serviceDescription: >-
+          Run a fully managed PostgreSQL database with built-in high availability and intelligent
+          performance.
+        serviceExternalDoc: https://learn.microsoft.com/en-us/azure/
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - CMAA
+        serviceOwner: Wanda Maximoff
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#pg
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: 1 business day
+        serviceUseCases:
+          - Relational application backends
+          - Analytics and reporting
+          - Geospatial data workloads
+          - Multi-tenant SaaS databases
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: cloud-cdn
+      title: Cloud CDN
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: Networking
+        serviceDescription: >-
+          Content delivery network using Google's globally distributed edge points of presence for
+          fast delivery.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#cloud-cdn
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Static web content caching
+          - API response caching
+          - Large file download acceleration
+          - Regional latency reduction
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: cloud-sql
+      title: Cloud SQL
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: Database
+        serviceDescription: >-
+          Fully managed relational database service for MySQL, PostgreSQL, and SQL Server on Google
+          Cloud.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#cloud-sql
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: 1 business day
+        serviceUseCases:
+          - Web application databases
+          - ERP and CRM backends
+          - Analytics data stores
+          - Migration targets from on-prem
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: filestore
+      title: Filestore
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: Storage
+        serviceDescription: >-
+          High-performance, fully managed NFS file storage for applications requiring a file system
+          interface.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#filestore
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: 1 business day
+        serviceUseCases:
+          - Kubernetes persistent volumes
+          - Content management systems
+          - Data analytics file shares
+          - Legacy NFS workloads
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: firestore
+      title: Cloud Firestore
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: Database
+        serviceDescription: >-
+          Serverless, scalable NoSQL document database built for automatic scaling and high
+          performance.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#firestore
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Mobile and web app data sync
+          - Real-time collaboration features
+          - Offline-capable applications
+          - Document-oriented data models
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: gce
+      title: Compute Engine
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: Compute
+        serviceDescription: High-performance virtual machines running in Google's globally distributed data centers.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#gce
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - General-purpose compute
+          - High-performance batch jobs
+          - Custom OS configurations
+          - Scale-out application tiers
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: gcp-iam
+      title: Google Cloud IAM
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: Security
+        serviceDescription: >-
+          Unified identity and access management for controlling who can do what on which Google
+          Cloud resource.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#gcp-iam
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Resource-level access control
+          - Service account management
+          - Org policy enforcement
+          - Workload Identity Federation
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: gcs
+      title: Cloud Storage
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: Storage
+        serviceDescription: >-
+          Store unstructured data with globally consistent, durable object storage across multiple
+          storage classes.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#gcs
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Data pipeline storage
+          - ML training datasets
+          - Static site hosting
+          - Cross-region data replication
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: gemini-api
+      title: Gemini API
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: AI & Machine Learning
+        serviceDescription: >-
+          Access Google's Gemini family of multimodal models for text, image, and code generation
+          tasks.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 2
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        serviceLimitations: Not approved for regulated data classification.
+        fedRampStatus: FedRAMP In Process
+        trmStatus: Divest
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#gemini-api
+        fundingApproach: Funding recouped
+        approvalWorkflow: Security Review
+        provisioningSLA: 5 business days
+        serviceUseCases:
+          - Multimodal content analysis
+          - Text and code generation
+          - Structured data extraction
+          - Conversational agents
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: gke
+      title: Google Kubernetes Engine
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: Compute
+        serviceDescription: Managed Kubernetes service to deploy, manage, and scale containerized applications on GCP.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 3
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        serviceLimitations: Autopilot mode not yet supported.
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Restricted
+        trmRestrictionOwner: CIM Compute Platform
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#gke
+        fundingApproach: Funding recouped
+        approvalWorkflow: Architecture Review
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Container orchestration
+          - Microservices deployment
+          - CI/CD workload hosting
+          - Multi-cluster federation
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: secret-manager
+      title: Secret Manager
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: Security
+        serviceDescription: >-
+          Store API keys, passwords, certificates, and other sensitive data as versioned secret
+          resources.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 1
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#secret-manager
+        fundingApproach: ECSD pay
+        approvalWorkflow: Auto-Approved
+        provisioningSLA: Same day
+        serviceUseCases:
+          - Sensitive config value storage
+          - Secret versioning and rotation
+          - Audit trail for secret access
+          - CI/CD pipeline credentials
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: vertex-ai
+      title: Vertex AI
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: AI & Machine Learning
+        serviceDescription: >-
+          Unified ML platform to build, deploy, and scale AI models and MLOps pipelines on Google
+          Cloud.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 3
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        serviceLimitations: Quota increases require 5-business-day lead time.
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Divest
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#vertex-ai
+        fundingApproach: Funding recouped
+        approvalWorkflow: Architecture Review
+        provisioningSLA: 10 business days
+        serviceUseCases:
+          - Custom model training at scale
+          - Feature store management
+          - Model monitoring and explainability
+          - Pipeline orchestration
+  - apiVersion: backstage.io/v1alpha1
+    kind: Resource
+    metadata:
+      name: vpc
+      title: Virtual Private Cloud
+    spec:
+      type: service-offering
+      profile:
+        cloudProvider: Google Cloud
+        serviceCategory: Networking
+        serviceDescription: >-
+          Provision isolated, software-defined networking for cloud workloads across Google's global
+          infrastructure.
+        serviceExternalDoc: https://cloud.google.com/docs
+        serviceInternalDoc: https://cloud-docs.cbp.dhs.gov/
+        provisioningModel: Tier 2
+        cloudAto:
+          - MAGE
+        serviceOwner: Carol Danvers
+        fedRampStatus: FedRAMP Certified
+        trmStatus: Permitted
+        trmLink: https://cloud-docs.cbp.dhs.gov/governance/trm.html#gcp-vpc
+        fundingApproach: ECSD pay
+        approvalWorkflow: Manager Approval
+        provisioningSLA: 2 business days
+        serviceUseCases:
+          - Global network topology
+          - VPN and interconnect
+          - Shared VPC for multi-project
+          - Firewall policy enforcement
