@@ -249,6 +249,23 @@ is a config change, not a code change. The adapter boundary
 is kept thin specifically so that decision doesn't ripple into
 `ServiceLogFeature` or any shared UI component.
 
+## 11. Narrow-viewport / responsive behavior
+
+Checked directly rather than assumed: at a 900px and a 700px viewport,
+`/servicelog` shows a horizontal scrollbar (`document.documentElement`
+`scrollWidth` > `clientWidth`). Isolating the cause -- checked the
+Backstage root/404 page, which has zero ServiceLog content, at the same
+900px width -- shows the identical overflow (1124px vs. 1116px, a
+rounding-level difference). The overflow is the harness's own Backstage
+Sidebar/`PluginHeader` chrome (`@backstage/ui`'s `bui-PluginHeader`
+toolbar), not anything ServiceLog contributes: at every width tested,
+ServiceLog's own content (search bar, filters, card grid) reflows
+correctly inside whatever width that chrome allocates it, with no
+overlapping or cut-off content. Consistent with "Backstage owns Backstage
+chrome" (section 4/8): fixing the host shell's own narrow-viewport
+behavior is out of this plugin's boundary, and STORY 2.3 does not ask for
+it.
+
 ## Summary
 
 - No target-host upgrade is required or assumed anywhere above.
